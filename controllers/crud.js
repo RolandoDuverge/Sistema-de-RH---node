@@ -8,7 +8,7 @@ exports.save = (req, res)=>{
         console.log(error);
     }else{
         //console.log(results);   
-        res.redirect('/');         
+        res.redirect('/');     
     }
 });
 };
@@ -25,3 +25,4 @@ exports.update = (req, res)=>{
         }
     });
     };
+

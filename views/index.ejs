@@ -12,12 +12,16 @@
       integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
       crossorigin="anonymous"
     />
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/dataTables.bootstrap5.min.css">
     <!-- Box icons -->
     <link
       href="https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css"
       rel="stylesheet"
     />
-
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.6.5/css/buttons.dataTables.min.css">    
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.23/css/dataTables.bootstrap5.min.css">
     <title>Sistema de RH</title>
   </head>
   <body>
@@ -53,17 +57,6 @@
               >
             </li>
           </ul>
-          <form class="d-flex">
-            <input
-              class="form-control me-2"
-              type="search"
-              placeholder="Search"
-              aria-label="Search"
-            />
-            <button class="btn btn-outline-success" type="submit">
-              Search
-            </button>
-          </form>
         </div>
       </div>
     </nav>
@@ -72,10 +65,9 @@
       <a href="/create" class="btn btn-outline-primary mt-4"
         ><i class="bx bx-plus"></i
       ></a>
-      <table class="table table-bordered table-striped text-center mt-4">
+      <table id="idiomas" class="table table-bordered table-striped text-center mt-4">
         <thead>
           <tr class="bg-primary text-white">
-            <th scope="col">Id</th>
             <th scope="col">Nombre</th>
             <th scope="col">Estado</th>
             <th scope="col">Acción</th>
@@ -84,12 +76,21 @@
         <tbody>
             <% results.forEach((idiomas)=> { %>
           <tr>
-            <td><%= idiomas.id %></td>
             <td><%= idiomas.nombre %></td>
-            <td><%= idiomas.estado %></td>
             <td>
-                <a href="/edit/<%= idiomas.id %>" class="btn btn-outline-info"> editar </a>
-                <a href="/delete/<%= idiomas.id %>" class="btn btn-outline-danger"> borrar </a>
+              <% if (idiomas.estado=="1") { %>
+                <i class='bx bx-checkbox-square' ></i>
+              <% }else {%>
+                <i class='bx bx-checkbox'></i>
+                <% } %>
+            </td>
+
+            <td>
+                <a href="/edit/<%= idiomas.id %>" class="btn btn-outline-info mn"> <i class="fa-regular fa-sm fa-pen-to-square"></i> </a>
+                <!-- <a href="/delete/<%= idiomas.id %>" class="btn btn-outline-danger"> <i class="fa-regular fa-trash-can"></i> </a> -->
+            
+                 <a onclick="confirmar(<%= idiomas.id %>)" class="btn btn-outline-danger"> <i class="fa-regular fa-trash-can"></i> </a>
+
             </td>
           </tr>
           <% }) %>
@@ -97,10 +98,73 @@
       </table>
     </div>
 
+        <!-- datatables -->
+        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+        <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+        <script src="https://cdn.datatables.net/1.12.1/js/dataTables.bootstrap5.min.js"></script>
+        <!-- bootstrap -->
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
       integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
       crossorigin="anonymous"
     ></script>
+
+
+    <!-- Para usar los botones -->
+    <script src="https://cdn.datatables.net/buttons/1.6.5/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.6.5/js/buttons.html5.min.js"></script>
+
+
+    <!-- Para los estilos en Excel     -->
+    <script src="https://cdn.jsdelivr.net/npm/datatables-buttons-excel-styles@1.1.1/js/buttons.html5.styles.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/datatables-buttons-excel-styles@1.1.1/js/buttons.html5.styles.templates.min.js"></script>
+
+        <!-- sweet alert -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.32/dist/sweetalert2.all.min.js"></script>
+    <script>
+      $(document).ready(function () {
+    $('#idiomas').DataTable({
+      dom: "Bfrtip",
+        buttons:{
+            dom: {
+                button: {
+                    className: 'btn'
+                }
+            },
+            buttons: [
+            {
+                extend: "excel",
+                text:'Exportar a Excel',
+                className:'btn btn-outline-success',
+                excelStyles: {                
+                    "template": [
+                        "blue_medium",
+                        "header_green",
+                        "title_medium"
+                    ] 
+                },
+            }
+            ]            
+        }            
+    });
+});
+
+      function confirmar(id){
+              Swal.fire({
+        title: '¿Confirma eliminar registro?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Confirmar',
+        cancelButtonText: 'Cancelar',
+      }).then((result) => {
+        if (result.isConfirmed) {
+          window.location = '/delete/'+id;
+        }
+      })
+      }
+    </script>
   </body>
 </html>
