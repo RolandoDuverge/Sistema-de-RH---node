@@ -88,8 +88,8 @@
             <td><%= idiomas.nombre %></td>
             <td><%= idiomas.estado %></td>
             <td>
-                <a href="/edit" class="btn btn-outline-info"> editar </a>
-                <a href="/delete" class="btn btn-outline-danger"> borrar </a>
+                <a href="/edit/<%= idiomas.id %>" class="btn btn-outline-info"> editar </a>
+                <a href="/delete/<%= idiomas.id %>" class="btn btn-outline-danger"> borrar </a>
             </td>
           </tr>
           <% }) %>

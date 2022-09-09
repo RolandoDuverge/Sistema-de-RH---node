@@ -12,3 +12,16 @@ exports.save = (req, res)=>{
     }
 });
 };
+
+exports.update = (req, res)=>{ 
+    const id = req.body.id;
+    const nombre = req.body.nombre;
+    const estado = req.body.estado;
+    conexion.query('UPDATE idiomas SET ? WHERE id = ?', [{nombre:nombre, estado:estado}, id], (error, results)=>{
+        if(error){
+            console.log(error);
+        }else{
+            res.redirect('/');          
+        }
+    });
+    };
