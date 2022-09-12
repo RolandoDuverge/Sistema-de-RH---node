@@ -88,14 +88,13 @@
             <td>
                 <a href="/edit/<%= idiomas.id %>" class="btn btn-outline-info mn"> <i class="fa-regular fa-sm fa-pen-to-square"></i> </a>
                 <!-- <a href="/delete/<%= idiomas.id %>" class="btn btn-outline-danger"> <i class="fa-regular fa-trash-can"></i> </a> -->
-            
                  <a onclick="confirmar(<%= idiomas.id %>)" class="btn btn-outline-danger"> <i class="fa-regular fa-trash-can"></i> </a>
-
             </td>
           </tr>
           <% }) %>
         </tbody>
       </table>
+      <h3 style="left: auto;"> El usuario conectado es: <%= %></h3>
     </div>
 
         <!-- datatables -->
