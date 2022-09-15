@@ -2,16 +2,8 @@ const express = require("express");
 const router = express.Router();
 const conexion = require("./database/db");
 const bcryptjs = require('bcryptjs');
+const session = require('express-session');
 
-router.get('/', (req, res) => {
-  conexion.query('SELECT * FROM idiomas',(error, results)=>{
-    if (error) {
-      throw error;
-    } else {
-      res.render('index.ejs', {results:results});   
-    }
-  })
-})
 //crear registros
 router.get('/create', (req,res)=>{
   res.render('create');
@@ -76,8 +68,76 @@ router.post('/register', async (req, res)=>{
 			});
     }
   })
-
 })
 
-module.exports = router;
+router.post('/auth', async (req, res)=> {
+	const user = req.body.user;
+	const pass = req.body.pass;    
+    let passwordHash = await bcryptjs.hash(pass, 8);
+	if (user && pass) {
+		conexion.query('SELECT * FROM users WHERE user = ?', [user], async (error, results, fields)=> {
+			if( results.length == 0 || !(await bcryptjs.compare(pass, results[0].pass)) ) {    
+				res.render('login', {
+                        alert: true,
+                        alertTitle: "Error",
+                        alertMessage: "USUARIO y/o PASSWORD incorrectas",
+                        alertIcon:'error',
+                        showConfirmButton: true,
+                        timer: false,
+                        ruta: 'login'    
+                    });
+							
+			} else {           
+				req.session.loggedin = true;                
+				req.session.name = results[0].name;
+				res.render('login', {
+					alert: true,
+					alertTitle: "Conexión exitosa",
+					alertMessage: "¡LOGIN CORRECTO!",
+					alertIcon:'success',
+					showConfirmButton: false,
+					timer: 1500,
+					ruta: ''
+				});        			
+			}			
+			res.end();
+		});
+	} else {	
+		res.send('Please enter user and Password!');
+		res.end();
+	}
+});
 
+
+router.use(function(req, res, next) {
+  if (!req.user)
+      res.header('Cache-Control', 'private, no-cache, no-store, must-revalidate');
+  next();
+});
+
+router.get('/logout', function (req, res) {
+	req.session.destroy(() => {
+	  res.redirect('/') 
+	})
+});
+
+
+router.get('/', (req, res)=> {
+  conexion.query('SELECT * FROM idiomas',(error, results)=>{
+	if (req.session.loggedin) {
+		res.render('index',{
+      results:results,
+			login: true,
+			name: req.session.name			
+		});		
+	} else {
+		res.render('index.ejs',{
+			login:false,
+			name:'Debe iniciar sesión'			
+		});				
+	}
+	res.end();
+})
+});
+
+module.exports = router;
