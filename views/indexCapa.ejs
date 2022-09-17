@@ -58,35 +58,55 @@
       </div>
     </nav>
     <br>
-    <h1 class="container">Idiomas</h1>
+    <h1 class="container">Capacitaciones</h1>
     <div class="container">
-      <a href="/create" class="btn btn-outline-primary mt-4"
+      <a href="/createCapa" class="btn btn-outline-primary mt-4"
         ><i class="bx bx-plus"></i
       ></a>
-      <table id="idiomas" class="table table-bordered table-striped text-center mt-4">
+      <table id="capacitaciones" class="table table-bordered table-striped text-center mt-4">
         <thead>
           <tr class="bg-primary text-white">
-            <th scope="col">Nombre</th>
-            <th scope="col">Estado</th>
+            <th scope="col">Descripcion</th>
+            <th scope="col">Nivel</th>
+            <th scope="col">Fecha desde</th>
+            <th scope="col">Fecha hasta</th>
+            <th scope="col">Institucion</th>
             <th scope="col">Acción</th>
           </tr>
         </thead>
         <tbody>
-            <% results.forEach((idiomas)=> { %> 
+            <% results.forEach((capacitaciones)=> { %> 
           <tr>
-            <td><%= idiomas.nombre %></td>
+            <td><%= capacitaciones.descripcion %></td>
             <td>
-              <% if (idiomas.estado=="1") { %>
-                <i class='bx bx-checkbox-square' ></i>
-              <% }else {%>
-                <i class='bx bx-checkbox'></i>
-                <% } %>
+              <% switch (capacitaciones.nivel) {
+                case 0: %>
+                <p>Grado</p>
+              <% break;
+                case 1: %>
+                <p>Post-grado</p>
+              <% break;
+                case 2: %>
+                <p>Maestría</p>
+                <% break;
+                case 3: %>
+                <p>Doctorado</p>
+                <% break;
+                case 4: %>
+                <p>Técnico</p>
+                <% break;
+                case 5: %>
+                <p>Gestión</p>
+              <% break;
+                default: 
+                break; } %>
             </td>
-
+            <td><%= capacitaciones.fechaPre %></td>
+            <td><%= capacitaciones.fechaPos %></td>
+            <td><%= capacitaciones.institucion %></td>
             <td>
-                <a href="/edit/<%= idiomas.id %>" class="btn btn-outline-info mn"> <i class="fa-regular fa-sm fa-pen-to-square"></i> </a>
-                <!-- <a href="/delete/<%= idiomas.id %>" class="btn btn-outline-danger"> <i class="fa-regular fa-trash-can"></i> </a> -->
-                 <a onclick="confirmar(<%= idiomas.id %>)" class="btn btn-outline-danger"> <i class="fa-regular fa-trash-can"></i> </a>
+                <a href="/editCapa/<%= capacitaciones.id %>" class="btn btn-outline-info mn"> <i class="fa-regular fa-sm fa-pen-to-square"></i> </a>
+                 <a onclick="confirmar(<%= capacitaciones.id %>)" class="btn btn-outline-danger"> <i class="fa-regular fa-trash-can"></i> </a>
             </td>
           </tr>
           <% }) %>
@@ -130,7 +150,7 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.32/dist/sweetalert2.all.min.js"></script>
     <script>
       $(document).ready(function () {
-    $('#idiomas').DataTable({
+    $('#capacitaciones').DataTable({
       dom: "Bfrtip",
         buttons:{
             dom: {
@@ -167,7 +187,7 @@
         cancelButtonText: 'Cancelar',
       }).then((result) => {
         if (result.isConfirmed) {
-          window.location = '/delete/'+id;
+          window.location = '/deleteCapa/'+id;
         }
       })
       }

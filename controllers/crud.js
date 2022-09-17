@@ -52,3 +52,35 @@ exports.update = (req, res)=>{
         });
         };
 
+        exports.saveCapa = (req, res)=>{
+            const descripcion = req.body.descripcion;
+            const nivel = req.body.nivel;
+            const fechaPre = req.body.fechaPre;
+            const fechaPos = req.body.fechaPos;
+            const institucion = req.body.institucion;
+            conexion.query('INSERT INTO capacitaciones SET ?',{descripcion:descripcion, nivel:nivel, fechaPre:fechaPre, fechaPos:fechaPos, institucion:institucion}, (error, results)=>{
+            if(error){
+                console.log(error);
+            }else{
+                //console.log(results);   
+                res.redirect('/indexCapa');     
+            }
+        });
+        };
+        
+        exports.updateCapa = (req, res)=>{ 
+            const id = req.body.id;
+            const descripcion = req.body.descripcion;
+            const nivel = req.body.nivel;
+            const fechaPre = req.body.fechaPre;
+            const fechaPos = req.body.fechaPos;
+            const institucion = req.body.institucion;
+            conexion.query('UPDATE capacitaciones SET ? WHERE id = ?', [{descripcion:descripcion, nivel:nivel, fechaPre:fechaPre, fechaPos:fechaPos, institucion:institucion}, id], (error, results)=>{
+                if(error){
+                    console.log(error);
+                }else{
+                    res.redirect('/indexCapa');          
+                }
+            });
+            };
+    

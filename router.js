@@ -94,6 +94,47 @@ router.get('/deleteCompe/:id', (req,res)=>{
   }
 })
 
+//crear registros Capa
+router.get('/createCapa', (req,res)=>{
+  if (req.session.loggedin) {
+res.render('createCapa');		
+} else {
+res.render('login.ejs');   
+}
+}); 
+
+//editar registros Capa
+router.get('/editCapa/:id', (req,res)=>{
+if (req.session.loggedin) {
+const id = req.params.id;
+conexion.query('SELECT * FROM capacitaciones WHERE id=?', [id], (error, results)=>{
+if (error) {
+  throw error;
+} else {
+  res.render('editCapa', {capacitaciones:results[0]});   
+}
+})
+} else {
+  res.redirect('/login'); 
+}
+})
+
+//eliminar registros Capa
+router.get('/deleteCapa/:id', (req,res)=>{ 
+if (req.session.loggedin) {
+const id = req.params.id;
+conexion.query('DELETE FROM capacitaciones WHERE id= ?',[id], (error, results)=>{
+if (error) {
+  throw error;
+} else {
+  res.redirect('/indexCapa');
+}
+})
+} else {
+  res.redirect('/login');
+}
+})
+
 router.get('/login', (req, res)=>{
   res.render('login');
 })
@@ -105,6 +146,9 @@ router.post('/update', crud.update)
 
 router.post('/saveCompe', crud.saveCompe)
 router.post('/updateCompe', crud.updateCompe)
+
+router.post('/saveCapa', crud.saveCapa)
+router.post('/updateCapa', crud.updateCapa)
 
 router.post('/register', async (req, res)=>{
   const user = req.body.user;
@@ -221,4 +265,27 @@ router.get('/', (req, res)=> {
   }
   })
   });
+
+  
+
+  router.get('/indexCapa', (req, res)=> {
+    conexion.query('SELECT * FROM capacitaciones',(error, results)=>{
+      if(error) {
+        throw error;
+      } else {
+      if (req.session.loggedin) {
+        res.render('indexCapa',{
+          login: true,
+          name: req.session.name,
+          results:results
+        });		
+      } else {
+      res.render('indexCapa.ejs', {results:results,login:false,
+        name:'Debe iniciar sesión',	});   	
+      }
+      res.end();
+    }
+    })
+    });
+    
 module.exports = router;
