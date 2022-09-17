@@ -122,22 +122,36 @@ router.get('/logout', function (req, res) {
 });
 
 
+router.get('/', (req, res) => {
+	conexion.query('SELECT * FROM idiomas',(error, results)=>{
+	  if (error) {
+		throw error;
+	  } else {
+		res.render('index.ejs', {results:results});   
+	  }
+	})
+  })
+
+  
 router.get('/', (req, res)=> {
-  conexion.query('SELECT * FROM idiomas',(error, results)=>{
-	if (req.session.loggedin) {
-		res.render('index',{
-      results:results,
-			login: true,
-			name: req.session.name			
-		});		
-	} else {
-		res.render('index.ejs',{
-			login:false,
-			name:'Debe iniciar sesión'			
-		});				
-	}
-	res.end();
-})
-});
+	conexion.query('SELECT * FROM idiomas',(error, results)=>{
+		if(error) {
+		  throw error;
+	  } else {
+	  if (req.session.loggedin) {
+		  res.render('index',{
+			  login: true,
+			  name: req.session.name,
+			  results:results
+		  });		
+	  } else {
+		res.render('index.ejs', {results:results,			login:false,
+			name:'Debe iniciar sesión',	});   	
+	  }
+	  res.end();
+  }
+  })
+  });
+
 
 module.exports = router;
