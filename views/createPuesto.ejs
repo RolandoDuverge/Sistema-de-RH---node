@@ -41,7 +41,7 @@
               <a class="nav-link active" aria-current="page" href="#">Home</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="/indexCompe">Competencias</a>
+              <a class="nav-link" href="#">Link</a>
             </li>
             <li class="nav-item">
               <a
@@ -59,22 +59,38 @@
 
     <div class="container mt-4">     
         <div class="card border-secondary">  
-            <div class="card-header"><b>Nuevo idioma</b></div>
+            <div class="card-header"><b>Nuevo puesto</b></div>
             <div class="card-body">
-                <form action="/save" method="POST">
+                <form action="/savePuesto" method="POST">
                     <div class="mb-3">
-                    <label for="idiomas" class="form-label">Nombre</label>
+                    <label for="puestos" class="form-label">Nombre</label>
                     <input type="text" class="form-control" id="nombre" name="nombre" tabindex="1">
                     </div>   
                     <div class="mb-3">
-                      <label for="idiomas" class="form-label">Estado</label>
-                      <select id="estado" name="estado" class="form-select" aria-label="Default select example" tabindex="2">
-                          <option value="0" selected>Inactivo</option>
-                          <option value="1">Activo</option>                    
+                      <label for="puestos" class="form-label">Nivel de riesgo</label>
+                      <select id="nivelRiesgo" name="nivelRiesgo" class="form-select" aria-label="Default select example" tabindex="2">
+                          <option value="0" selected>Alto</option>
+                          <option value="1">Medio</option>     
+                          <option value="2">Bajo</option>              
                       </select>
-                      </div>            
-                    <button type="submit" class="btn btn-primary" tabindex="3">Guardar</button>
-                    <a href="/" class="btn btn-secondary">Cancelar</a>
+                      </div>          
+                        <div class="mb-3">
+                          <label for="puestos" class="form-label">Nivel de salario minimo</label>
+                          <input type="number" min="1" max="1000000" class="form-control" id="nivelSalarioMinimo" name="nivelSalarioMinimo" tabindex="3">
+                          </div>   
+                          <div class="mb-3">
+                            <label for="puestos" class="form-label">Nivel de salario maximo</label>
+                            <input type="number" min="1" max="1000000" class="form-control" id="nivelSalarioMaximo" name="nivelSalarioMaximo" tabindex="4">
+                            </div>   
+                            <div class="mb-3">
+                              <label for="puestos" class="form-label">Estado</label>
+                              <select id="estado" name="estado" class="form-select" aria-label="Default select example" tabindex="2">
+                                  <option value="0" selected>Inactivo</option>
+                                  <option value="1">Activo</option>                    
+                              </select>
+                              </div>   
+                    <button type="submit" class="btn btn-primary" tabindex="6">Guardar</button>
+                    <a href="/indexPuesto" class="btn btn-secondary">Cancelar</a>
                 </form>
             </div>
         </div>        

@@ -135,6 +135,48 @@ if (error) {
 }
 })
 
+
+//crear registros Puesto
+router.get('/createPuesto', (req,res)=>{
+  if (req.session.loggedin) {
+res.render('createPuesto');		
+} else {
+res.render('login.ejs');   
+}
+}); 
+
+//editar registros Puesto
+router.get('/editPuesto/:id', (req,res)=>{
+if (req.session.loggedin) {
+const id = req.params.id;
+conexion.query('SELECT * FROM puestos WHERE id=?', [id], (error, results)=>{
+if (error) {
+  throw error;
+} else {
+  res.render('editPuesto', {puestos:results[0]});   
+}
+})
+} else {
+  res.redirect('/login'); 
+}
+})
+
+//eliminar registros Puesto
+router.get('/deletePuesto/:id', (req,res)=>{ 
+if (req.session.loggedin) {
+const id = req.params.id;
+conexion.query('DELETE FROM puestos WHERE id= ?',[id], (error, results)=>{
+if (error) {
+  throw error;
+} else {
+  res.redirect('/indexPuesto');
+}
+})
+} else {
+  res.redirect('/login');
+}
+})
+
 router.get('/login', (req, res)=>{
   res.render('login');
 })
@@ -149,6 +191,9 @@ router.post('/updateCompe', crud.updateCompe)
 
 router.post('/saveCapa', crud.saveCapa)
 router.post('/updateCapa', crud.updateCapa)
+
+router.post('/savePuesto', crud.savePuesto)
+router.post('/updatePuesto', crud.updatePuesto)
 
 router.post('/register', async (req, res)=>{
   const user = req.body.user;
@@ -288,4 +333,24 @@ router.get('/', (req, res)=> {
     })
     });
     
+    router.get('/indexPuesto', (req, res)=> {
+      conexion.query('SELECT * FROM puestos',(error, results)=>{
+        if(error) {
+          throw error;
+        } else {
+        if (req.session.loggedin) {
+          res.render('indexPuesto',{
+            login: true,
+            name: req.session.name,
+            results:results
+          });		
+        } else {
+        res.render('indexPuesto.ejs', {results:results,login:false,
+          name:'Debe iniciar sesión',	});   	
+        }
+        res.end();
+      }
+      })
+      });
+
 module.exports = router;

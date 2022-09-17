@@ -82,5 +82,39 @@ exports.update = (req, res)=>{
                     res.redirect('/indexCapa');          
                 }
             });
-            };
+        };
     
+            exports.savePuesto = (req, res)=>{
+                const nombre = req.body.nombre;
+                const nivelRiesgo = req.body.nivelRiesgo;
+                const nivelSalarioMinimo = req.body.nivelSalarioMinimo;
+                const nivelSalarioMaximo = req.body.nivelSalarioMaximo;
+                const estado = req.body.estado;
+                conexion.query('INSERT INTO puestos SET ?',{nombre:nombre, nivelRiesgo:nivelRiesgo, nivelSalarioMinimo:nivelSalarioMinimo, nivelSalarioMaximo:nivelSalarioMaximo, estado:estado}, (error, results)=>{
+                if(error){
+                    console.log(error);
+                }else{
+                    //console.log(results);   
+                    res.redirect('/indexPuesto');     
+                }
+            });
+            };
+            
+            exports.updatePuesto = (req, res)=>{ 
+                const id = req.body.id;
+                const nombre = req.body.nombre;
+                const nivelRiesgo = req.body.nivelRiesgo;
+                const nivelSalarioMinimo = req.body.nivelSalarioMinimo;
+                const nivelSalarioMaximo = req.body.nivelSalarioMaximo;
+                const estado = req.body.estado;
+                conexion.query('UPDATE puestos SET ? WHERE id = ?', [{nombre:nombre, nivelRiesgo:nivelRiesgo, nivelSalarioMinimo:nivelSalarioMinimo, nivelSalarioMaximo:nivelSalarioMaximo, estado:estado}, id], (error, results)=>{
+                    if(error){
+                        console.log(error);
+                    }else{
+                        res.redirect('/indexPuesto');          
+                    }
+                });
+                };
+        
+
+            

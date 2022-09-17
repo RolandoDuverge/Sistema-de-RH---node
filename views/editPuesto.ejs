@@ -23,7 +23,6 @@
     <title>Sistema de RH</title>
   </head>
   <body>
-    
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
       <div class="container-fluid">
         <a class="navbar-brand" href="#">Navbar</a>
@@ -44,7 +43,7 @@
               <a class="nav-link active" aria-current="page" href="#">Home</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="/indexCompe">Competencias</a>
+              <a class="nav-link" href="#">Link</a>
             </li>
             <li class="nav-item">
               <a
@@ -59,26 +58,42 @@
         </div>
       </div>
     </nav>
-    <% if (idiomas) { %>
+    <% if (puestos) { %>
     <div class="container mt-4">     
         <div class="card border-secondary">  
-            <div class="card-header"><b>Editar idioma</b></div>
+            <div class="card-header"><b>Editar puestos</b></div>
             <div class="card-body">
-                <form action="/update" method="POST">
-                    <input id="id" name="id" value="<%= idiomas.id %>" hidden>
+                <form action="/updatePuesto" method="POST">
+                    <input id="id" name="id" value="<%= puestos.id %>" hidden>
                     <div class="mb-3">
-                    <label for="idiomas" class="form-label">Nombre</label>
-                    <input type="text" class="form-control" id="nombre" name="nombre" value="<%= idiomas.nombre %>" tabindex="1">
+                    <label for="puestos" class="form-label">Nombre</label>
+                    <input type="text" class="form-control" id="nombre" name="nombre" value="<%= puestos.nombre %>" tabindex="1">
                     </div>   
                     <div class="mb-3">
-                      <label for="idiomas" class="form-label">Estado</label>
-                      <select id="estado" name="estado" class="form-select" aria-label="Default select example" tabindex="2">
-                          <option <%= idiomas.estado=='0' ? "selected" : '' %> value="0" selected>Inactivo</option>
-                          <option <%= idiomas.estado=='1' ? "selected" : '' %> value="1">Activo</option>                    
-                      </select>
-                      </div>            
-                    <button type="submit" class="btn btn-primary" tabindex="3">Guardar</button>
-                    <a href="/" class="btn btn-secondary">Cancelar</a>
+                      <label for="puestos" class="form-label">Nivel de riesgo</label>
+                      <select id="nivelRiesgo" name="nivelRiesgo" class="form-select" aria-label="Default select example" tabindex="2">
+                          <option <%= puestos.nivelRiesgo=='0' ? "selected" : '' %> value="0" selected>Alto</option>
+                          <option <%= puestos.nivelRiesgo=='1' ? "selected" : '' %> value="1">Medio</option>  
+                          <option <%= puestos.nivelRiesgo=='2' ? "selected" : '' %> value="2">Bajo</option>          
+                        </select>
+                      </div> 
+                      <div class="mb-3">
+                        <label for="puestos" class="form-label">Nivel de salario minimo</label>
+                        <input type="number" class="form-control" id="nivelSalarioMinimo  " name="nivelSalarioMinimo" value="<%= puestos.nivelSalarioMinimo %>" tabindex="3">
+                        </div>  
+                        <div class="mb-3">
+                          <label for="puestos" class="form-label">Nivel de salario maximo</label>
+                          <input type="number" class="form-control" id="nivelSalarioMaximo" name="nivelSalarioMaximo" value="<%= puestos.nivelSalarioMaximo %>" tabindex="4">
+                          </div>  
+                          <div class="mb-3">
+                            <label for="puestos" class="form-label">Estado</label>
+                            <select id="estado" name="estado" class="form-select" aria-label="Default select example" tabindex="5">
+                                <option <%= puestos.estado=='0' ? "selected" : '' %> value="0" selected>Inactivo</option>
+                                <option <%= puestos.estado=='1' ? "selected" : '' %> value="1">Activo</option>                    
+                            </select>
+                            </div>          
+                    <button type="submit" class="btn btn-primary" tabindex="6">Guardar</button>
+                    <a href="/indexPuesto" class="btn btn-secondary">Cancelar</a>
                 </form>
             </div>
         </div>        
