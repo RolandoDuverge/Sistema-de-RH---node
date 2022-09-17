@@ -6,11 +6,16 @@ const session = require('express-session');
 
 //crear registros
 router.get('/create', (req,res)=>{
-  res.render('create');
-})
+    if (req.session.loggedin) {
+	res.render('create');		
+} else {
+  res.render('login.ejs');   
+}
+}); 
 
 //editar registros
 router.get('/edit/:id', (req,res)=>{
+	if (req.session.loggedin) {
   const id = req.params.id;
   conexion.query('SELECT * FROM idiomas WHERE id=?', [id], (error, results)=>{
   if (error) {
@@ -19,10 +24,14 @@ router.get('/edit/:id', (req,res)=>{
     res.render('edit', {idiomas:results[0]});   
   }
 })
+} else {
+    res.redirect('/login'); 
+  }
 })
 
 //eliminar registros
 router.get('/delete/:id', (req,res)=>{ 
+	if (req.session.loggedin) {
   const id = req.params.id;
   conexion.query('DELETE FROM idiomas WHERE id= ?',[id], (error, results)=>{
   if (error) {
@@ -31,6 +40,9 @@ router.get('/delete/:id', (req,res)=>{
     res.redirect('/');
   }
 })
+} else {
+    res.redirect('/login');
+  }
 })
 
 router.get('/login', (req, res)=>{
@@ -117,14 +129,10 @@ router.use(function(req, res, next) {
 
 router.get('/logout', function (req, res) {
 	req.session.destroy(() => {
-	  res.redirect('/') 
+	  res.redirect('/login') 
 	})
 });
 
-
-
-
-  
 router.get('/', (req, res)=> {
 	conexion.query('SELECT * FROM idiomas',(error, results)=>{
 		if(error) {
