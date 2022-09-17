@@ -122,15 +122,7 @@ router.get('/logout', function (req, res) {
 });
 
 
-router.get('/', (req, res) => {
-	conexion.query('SELECT * FROM idiomas',(error, results)=>{
-	  if (error) {
-		throw error;
-	  } else {
-		res.render('index.ejs', {results:results});   
-	  }
-	})
-  })
+
 
   
 router.get('/', (req, res)=> {
@@ -145,7 +137,7 @@ router.get('/', (req, res)=> {
 			  results:results
 		  });		
 	  } else {
-		res.render('index.ejs', {results:results,			login:false,
+		res.render('index.ejs', {results:results,login:false,
 			name:'Debe iniciar sesión',	});   	
 	  }
 	  res.end();
