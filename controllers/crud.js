@@ -26,3 +26,29 @@ exports.update = (req, res)=>{
     });
     };
 
+    exports.saveCompe = (req, res)=>{
+        const descripcion = req.body.descripcion;
+        const estado = req.body.estado;
+        conexion.query('INSERT INTO competencias SET ?',{descripcion:descripcion, estado:estado}, (error, results)=>{
+        if(error){
+            console.log(error);
+        }else{
+            //console.log(results);   
+            res.redirect('/indexCompe');     
+        }
+    });
+    };
+    
+    exports.updateCompe = (req, res)=>{ 
+        const id = req.body.id;
+        const descripcion = req.body.descripcion;
+        const estado = req.body.estado;
+        conexion.query('UPDATE competencias SET ? WHERE id = ?', [{descripcion:descripcion, estado:estado}, id], (error, results)=>{
+            if(error){
+                console.log(error);
+            }else{
+                res.redirect('/indexCompe');          
+            }
+        });
+        };
+

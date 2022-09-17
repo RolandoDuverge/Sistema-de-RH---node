@@ -41,7 +41,7 @@
               <a class="nav-link active" aria-current="page" href="#">Home</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="/indexCompe">Competencias</a>
+              <a class="nav-link" href="/">Idiomas</a>
             </li>
             <li class="nav-item">
               <a
@@ -59,22 +59,22 @@
 
     <div class="container mt-4">     
         <div class="card border-secondary">  
-            <div class="card-header"><b>Nuevo idioma</b></div>
+            <div class="card-header"><b>Nueva competencia</b></div>
             <div class="card-body">
-                <form action="/save" method="POST">
+                <form action="/saveCompe" method="POST">
                     <div class="mb-3">
-                    <label for="idiomas" class="form-label">Nombre</label>
-                    <input type="text" class="form-control" id="nombre" name="nombre" tabindex="1">
+                    <label for="competencias" class="form-label">Descripcion</label>
+                    <input type="text" class="form-control" id="descripcion" name="descripcion" tabindex="1">
                     </div>   
                     <div class="mb-3">
-                      <label for="idiomas" class="form-label">Estado</label>
+                      <label for="competencias" class="form-label">Estado</label>
                       <select id="estado" name="estado" class="form-select" aria-label="Default select example" tabindex="2">
                           <option value="0" selected>Inactivo</option>
                           <option value="1">Activo</option>                    
                       </select>
                       </div>            
                     <button type="submit" class="btn btn-primary" tabindex="5">Guardar</button>
-                    <a href="/" class="btn btn-secondary">Cancelar</a>
+                    <a href="/indexCompe" class="btn btn-secondary">Cancelar</a>
                 </form>
             </div>
         </div>        

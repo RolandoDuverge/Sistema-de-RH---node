@@ -53,10 +53,58 @@ router.get('/register', (req, res)=>{
   res.render('register');
 })
 
+//crear registros Compe
+router.get('/createCompe', (req,res)=>{
+    if (req.session.loggedin) {
+	res.render('createCompe');		
+} else {
+  res.render('login.ejs');   
+}
+}); 
+
+//editar registros Compe
+router.get('/editCompe/:id', (req,res)=>{
+	if (req.session.loggedin) {
+  const id = req.params.id;
+  conexion.query('SELECT * FROM competencias WHERE id=?', [id], (error, results)=>{
+  if (error) {
+    throw error;
+  } else {
+    res.render('editCompe', {competencias:results[0]});   
+  }
+})
+} else {
+    res.redirect('/login'); 
+  }
+})
+
+//eliminar registros Compe
+router.get('/deleteCompe/:id', (req,res)=>{ 
+	if (req.session.loggedin) {
+  const id = req.params.id;
+  conexion.query('DELETE FROM competencias WHERE id= ?',[id], (error, results)=>{
+  if (error) {
+    throw error;
+  } else {
+    res.redirect('/indexCompe');
+  }
+})
+} else {
+    res.redirect('/login');
+  }
+})
+
+router.get('/login', (req, res)=>{
+  res.render('login');
+})
+
 const crud = require('./controllers/crud');
 const { application } = require("express");
 router.post('/save', crud.save)
 router.post('/update', crud.update)
+
+router.post('/saveCompe', crud.saveCompe)
+router.post('/updateCompe', crud.updateCompe)
 
 router.post('/register', async (req, res)=>{
   const user = req.body.user;
@@ -154,4 +202,23 @@ router.get('/', (req, res)=> {
   });
 
 
+  router.get('/indexCompe', (req, res)=> {
+	conexion.query('SELECT * FROM competencias',(error, results)=>{
+		if(error) {
+		  throw error;
+	  } else {
+	  if (req.session.loggedin) {
+		  res.render('indexCompe',{
+			  login: true,
+			  name: req.session.name,
+			  results:results
+		  });		
+	  } else {
+		res.render('indexCompe.ejs', {results:results,login:false,
+			name:'Debe iniciar sesión',	});   	
+	  }
+	  res.end();
+  }
+  })
+  });
 module.exports = router;

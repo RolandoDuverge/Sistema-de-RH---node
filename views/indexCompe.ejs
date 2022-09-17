@@ -45,7 +45,7 @@
               <a class="nav-link active" aria-current="page" href="#">Home</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="/indexCompe">Competencias</a>
+              <a class="nav-link" href="/">Idiomas</a>
             </li>
             <li class="nav-item">
               <a
@@ -61,25 +61,25 @@
       </div>
     </nav>
     <br>
-    <h1 class="container">Idiomas</h1>
+    <h1 class="container">Competencias</h1>
     <div class="container">
-      <a href="/create" class="btn btn-outline-primary mt-4"
+      <a href="/createCompe" class="btn btn-outline-primary mt-4"
         ><i class="bx bx-plus"></i
       ></a>
-      <table id="idiomas" class="table table-bordered table-striped text-center mt-4">
+      <table id="competencias" class="table table-bordered table-striped text-center mt-4">
         <thead>
           <tr class="bg-primary text-white">
-            <th scope="col">Nombre</th>
+            <th scope="col">Descripcion</th>
             <th scope="col">Estado</th>
             <th scope="col">Acción</th>
           </tr>
         </thead>
         <tbody>
-            <% results.forEach((idiomas)=> { %> 
+            <% results.forEach((competencias)=> { %> 
           <tr>
-            <td><%= idiomas.nombre %></td>
+            <td><%= competencias.descripcion %></td>
             <td>
-              <% if (idiomas.estado=="1") { %>
+              <% if (competencias.estado=="1") { %>
                 <i class='bx bx-checkbox-square' ></i>
               <% }else {%>
                 <i class='bx bx-checkbox'></i>
@@ -87,9 +87,9 @@
             </td>
 
             <td>
-                <a href="/edit/<%= idiomas.id %>" class="btn btn-outline-info mn"> <i class="fa-regular fa-sm fa-pen-to-square"></i> </a>
-                <!-- <a href="/delete/<%= idiomas.id %>" class="btn btn-outline-danger"> <i class="fa-regular fa-trash-can"></i> </a> -->
-                 <a onclick="confirmar(<%= idiomas.id %>)" class="btn btn-outline-danger"> <i class="fa-regular fa-trash-can"></i> </a>
+                <a href="/editCompe/<%= competencias.id %>" class="btn btn-outline-info mn"> <i class="fa-regular fa-sm fa-pen-to-square"></i> </a>
+              
+                 <a onclick="confirmar(<%= competencias.id %>)" class="btn btn-outline-danger"> <i class="fa-regular fa-trash-can"></i> </a>
             </td>
           </tr>
           <% }) %>
@@ -133,7 +133,7 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.32/dist/sweetalert2.all.min.js"></script>
     <script>
       $(document).ready(function () {
-    $('#idiomas').DataTable({
+    $('#competencias').DataTable({
       dom: "Bfrtip",
         buttons:{
             dom: {
@@ -170,7 +170,7 @@
         cancelButtonText: 'Cancelar',
       }).then((result) => {
         if (result.isConfirmed) {
-          window.location = '/delete/'+id;
+          window.location = '/deleteCompe/'+id;
         }
       })
       }
