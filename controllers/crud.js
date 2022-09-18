@@ -133,4 +133,41 @@ exports.update = (req, res)=>{
                 };
         
 
-            
+                exports.saveExpe = (req, res)=>{
+                    const empresa = req.body.empresa;
+                    const puesto = req.body.puesto;
+                    const fechaPre = req.body.fechaPre;
+                    const fechaPos = req.body.fechaPos;
+                    const salario = req.body.salario;
+                    if(Date.parse(fechaPos) < Date.parse(fechaPre)) {      
+                        alert('La fecha final debe ser mayor a la fecha inicial') 
+                     } else {
+                    conexion.query('INSERT INTO experiencia SET ?',{empresa:empresa, puesto:puesto, fechaPre:fechaPre, fechaPos:fechaPos, salario:salario}, (error, results)=>{
+                        if(error){
+                            console.log(error);
+                        }else{  
+                            res.redirect('/indexExpe');     
+                        }
+                    });
+                }
+                };
+                
+                exports.updateExpe = (req, res)=>{ 
+                    const id = req.body.id;
+                    const empresa = req.body.empresa;
+                    const puesto = req.body.puesto;
+                    const fechaPre = req.body.fechaPre;
+                    const fechaPos = req.body.fechaPos;
+                    const salario = req.body.salario;
+                    if(Date.parse(fechaPos) < Date.parse(fechaPre)) {      
+                        alert('La fecha final debe ser mayor a la fecha inicial') 
+                     } else {
+                    conexion.query('UPDATE experiencia SET ? WHERE id = ?', [{empresa:empresa, puesto:puesto, fechaPre:fechaPre, fechaPos:fechaPos, salario:salario}, id], (error, results)=>{
+                        if(error){
+                            console.log(error);
+                        }else{
+                            res.redirect('/indexExpe');          
+                        }
+                    });
+                }
+                };

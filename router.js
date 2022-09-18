@@ -177,6 +177,47 @@ if (error) {
 }
 })
 
+//crear registros experiencia
+router.get('/createExpe', (req,res)=>{
+  if (req.session.loggedin) {
+res.render('createExpe');		
+} else {
+res.render('login.ejs');   
+}
+}); 
+
+//editar registros experiencia
+router.get('/editExpe/:id', (req,res)=>{
+if (req.session.loggedin) {
+const id = req.params.id;
+conexion.query('SELECT * FROM experiencia WHERE id=?', [id], (error, results)=>{
+if (error) {
+  throw error;
+} else {
+  res.render('editExpe', {experiencia:results[0]});   
+}
+})
+} else {
+  res.redirect('/login'); 
+}
+})
+
+//eliminar registros experiencia
+router.get('/deleteExpe/:id', (req,res)=>{ 
+if (req.session.loggedin) {
+const id = req.params.id;
+conexion.query('DELETE FROM experiencia WHERE id= ?',[id], (error, results)=>{
+if (error) {
+  throw error;
+} else {
+  res.redirect('/indexExpe');
+}
+})
+} else {
+  res.redirect('/login');
+}
+})
+
 router.get('/login', (req, res)=>{
   res.render('login');
 })
@@ -194,6 +235,9 @@ router.post('/updateCapa', crud.updateCapa)
 
 router.post('/savePuesto', crud.savePuesto)
 router.post('/updatePuesto', crud.updatePuesto)
+
+router.post('/saveExpe', crud.saveExpe)
+router.post('/updateExpe', crud.updateExpe)
 
 router.post('/register', async (req, res)=>{
   const user = req.body.user;
@@ -352,5 +396,25 @@ router.get('/', (req, res)=> {
       }
       })
       });
+
+      router.get('/indexExpe', (req, res)=> {
+        conexion.query('SELECT * FROM experiencia',(error, results)=>{
+          if(error) {
+            throw error;
+          } else {
+          if (req.session.loggedin) {
+            res.render('indexExpe',{
+              login: true,
+              name: req.session.name,
+              results:results
+            });		
+          } else {
+          res.render('indexExpe.ejs', {results:results,login:false,
+            name:'Debe iniciar sesión',	});   	
+          }
+          res.end();
+        }
+        })
+        });
 
 module.exports = router;
