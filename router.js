@@ -136,6 +136,48 @@ router.get('/deleteCompe/:id', (req,res)=>{
   }
 })
 
+//crear registros candidatos
+router.get('/createCan', (req,res)=>{
+  if (req.session.loggedin) {
+res.render('createCan');		
+} else {
+res.render('login.ejs');   
+}
+}); 
+
+//editar registros candidatos
+router.get('/editCan/:id', (req,res)=>{
+if (req.session.loggedin) {
+const id = req.params.id;
+conexion.query('SELECT * FROM candidato WHERE id=?', [id], (error, results)=>{
+if (error) {
+  throw error;
+} else {
+  res.render('editCan', {candidato:results[0]});   
+}
+})
+} else {
+  res.redirect('/login'); 
+}
+})
+
+//eliminar registros candidatos
+router.get('/deleteCan/:id', (req,res)=>{ 
+if (req.session.loggedin) {
+const id = req.params.id;
+conexion.query('DELETE FROM candidato WHERE id= ?',[id], (error, results)=>{
+if (error) {
+  throw error;
+} else {
+  res.redirect('/indexCan');
+}
+})
+} else {
+  res.redirect('/login');
+}
+})
+
+
 //crear registros Capa
 router.get('/createCapa', (req,res)=>{
   if (req.session.loggedin) {
@@ -328,6 +370,9 @@ router.post('/updateDep', crud.updateDep)
 
 router.post('/saveEmp', crud.saveEmp)
 router.post('/updateEmp', crud.updateEmp)
+
+router.post('/saveCan', crud.saveCan)
+router.post('/updateCan', crud.updateCan)
 
 
 router.post('/register', async (req, res)=>{
@@ -548,5 +593,24 @@ router.get('/', (req, res)=> {
           })
           });
 
+          router.get('/indexCan', (req, res)=> {
+            conexion.query('SELECT * FROM candidato',(error, results)=>{
+              if(error) {
+                throw error;
+              } else {
+              if (req.session.loggedin) {
+                res.render('indexCan',{
+                  login: true,
+                  name: req.session.name,
+                  results:results
+                });		
+              } else {
+              res.render('indexCan.ejs', {results:results,login:false,
+                name:'Debe iniciar sesión',	});   	
+              }
+              res.end();
+            }
+            })
+            });
 
 module.exports = router;

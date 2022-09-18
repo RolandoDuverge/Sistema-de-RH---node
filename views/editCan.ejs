@@ -58,46 +58,52 @@
         </div>
       </div>
     </nav>
-    <% if (empleados) { %>
+    <% if (candidato) { %>
     <div class="container mt-4">     
         <div class="card border-secondary">  
-            <div class="card-header"><b>Editar empleados</b></div>
+            <div class="card-header"><b>Editar candidato</b></div>
             <div class="card-body">
-                <form action="/updateEmp" method="POST">
-                    <input id="id" name="id" value="<%= empleados.id %>" hidden>
+                <form action="/updateCan" method="POST">
+                    <input id="id" name="id" value="<%= candidato.id %>" hidden>
                     <div class="mb-3">
-                    <label for="empleados" class="form-label">Cedula</label>
-                    <input type="text" class="form-control" id="cedula" name="cedula" value="<%= empleados.cedula %>" tabindex="1">
+                    <label for="candidato" class="form-label">Cedula</label>
+                    <input type="text" class="form-control" id="cedula" name="cedula" value="<%= candidato.cedula %>" tabindex="1">
                     </div>   
                     <div class="mb-3">
-                      <label for="empleados" class="form-label">Nombre</label>
-                      <input type="text" class="form-control" id="nombre" name="nombre" value="<%= empleados.nombre %>" tabindex="2">
+                      <label for="candidato" class="form-label">Nombre</label>
+                      <input type="text" class="form-control" id="nombre" name="nombre" value="<%= candidato.nombre %>" tabindex="2">
                       </div>  
                       <div class="mb-3">
-                        <label for="empleados" class="form-label">Fecha ingreso</label>
-                        <input type="date" class="form-control" id="fechaIngreso" name="fechaIngreso" value="<%= empleados.fechaIngreso %>" tabindex="3">
+                        <label for="candidato" class="form-label">Puesto al que aspira</label>
+                        <input type="text" class="form-control" id="puestoAspira" name="puestoAspira" value="<%= candidato.puestoAspira %>" tabindex="3">
                         </div>  
                         <div class="mb-3">
-                          <label for="empleados" class="form-label">Departamento</label>
-                          <input type="text" class="form-control" id="departamento" name="departamento" value="<%= empleados.departamento  %>" tabindex="4">
+                          <label for="candidato" class="form-label">Departamento</label>
+                          <input type="text" class="form-control" id="departamento" name="departamento" value="<%= candidato.departamento  %>" tabindex="4">
                           </div>  
                           <div class="mb-3">
-                            <label for="empleados" class="form-label">Puestos</label>
-                            <input type="text" class="form-control" id="puesto" name="puesto" value="<%= empleados.puesto  %>" tabindex="5">
+                            <label for="candidato" class="form-label">Salario al que aspira</label>
+                            <input type="number" min="1" max="32932632873" class="form-control" id="salarioAspira" name="salarioAspira" value="<%= candidato.salarioAspira %>" tabindex="5">
                             </div>   
                             <div class="mb-3">
-                              <label for="empleados" class="form-label">Salario mensual</label>
-                              <input type="text" class="form-control" id="salarioMensual" name="salarioMensual" value="<%= empleados.salarioMensual  %>" tabindex="6">
+                              <label for="candidato" class="form-label">Principales competencias</label>
+                              <input type="text" class="form-control" id="principalesCompetencias" name="principalesCompetencias" value="<%= candidato.principalesCompetencias %>" tabindex="6">
                               </div>     
                               <div class="mb-3">
-                                <label for="empleados" class="form-label">Estado</label>
-                                <select id="estado" name="estado" class="form-select" aria-label="Default select example" tabindex="7">
-                                    <option <%= empleados.estado=='0' ? "selected" : '' %> value="0" selected>Inactivo</option>
-                                    <option <%= empleados.estado=='1' ? "selected" : '' %> value="1">Activo</option>                    
-                                </select>
-                                </div>          
-                    <button type="submit" class="btn btn-primary" tabindex="8">Guardar</button>
-                    <a href="/indexEmp" class="btn btn-secondary">Cancelar</a>
+                                <label for="candidato" class="form-label">Principales capacitaciones</label>
+                                <input type="text" class="form-control" id="principalesCapacitaciones" name="principalesCapacitaciones" value="<%= candidato.principalesCapacitaciones %>" tabindex="7">
+                                </div>     
+                                <div class="mb-3">
+                                  <label for="candidato" class="form-label">Experiencia laboral</label>
+                                  <input type="text" class="form-control" id="experienciaLaboral" name="experienciaLaboral" value="<%= candidato.experienciaLaboral %>" tabindex="8">
+                                  </div>     
+                                  <div class="mb-3">
+                                    <label for="candidato" class="form-label">Recomendado por</label>
+                                    <input type="text" class="form-control" id="recomendado" name="recomendado" value="<%= candidato.recomendado %>" tabindex="9 ">
+                                    </div>     
+      
+                    <button type="submit" class="btn btn-primary" tabindex="10">Guardar</button>
+                    <a href="/indexCan" class="btn btn-secondary">Cancelar</a>
                 </form>
             </div>
         </div>        

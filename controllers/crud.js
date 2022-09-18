@@ -235,3 +235,44 @@ exports.update = (req, res)=>{
                         }
                     });
                 };
+
+                exports.saveCan = (req, res)=>{
+                    const cedula = req.body.cedula;
+                    const nombre = req.body.nombre;
+                    const puestoAspira = req.body.puestoAspira;
+                    const departamento = req.body.departamento;
+                    const salarioAspira = req.body.salarioAspira;
+                    const principalesCompetencias = req.body.principalesCompetencias;
+                    const principalesCapacitaciones = req.body.principalesCapacitaciones;
+                    const experienciaLaboral = req.body.experienciaLaboral;
+                    const recomendado = req.body.recomendado;
+                        // validacion cedula
+                    conexion.query('INSERT INTO candidato SET ?',{cedula:cedula, nombre:nombre, puestoAspira:puestoAspira, departamento:departamento, salarioAspira:salarioAspira, principalesCompetencias:principalesCompetencias, principalesCapacitaciones:principalesCapacitaciones, experienciaLaboral:experienciaLaboral, recomendado:recomendado}, (error, results)=>{
+                        if(error){
+                            console.log(error);
+                        }else{  
+                            res.redirect('/indexCan');     
+                        }
+                    });
+                };
+                
+                exports.updateCan = (req, res)=>{ 
+                    const id = req.body.id;
+                    const cedula = req.body.cedula;
+                    const nombre = req.body.nombre;
+                    const puestoAspira = req.body.puestoAspira;
+                    const departamento = req.body.departamento;
+                    const salarioAspira = req.body.salarioAspira;
+                    const principalesCompetencias = req.body.principalesCompetencias;
+                    const principalesCapacitaciones = req.body.principalesCapacitaciones;
+                    const experienciaLaboral = req.body.experienciaLaboral;
+                    const recomendado = req.body.recomendado;
+                        // validacion cedula
+                    conexion.query('UPDATE candidato SET ? WHERE id = ?', [{cedula:cedula, nombre:nombre, puestoAspira:puestoAspira, departamento:departamento, salarioAspira:salarioAspira, principalesCompetencias:principalesCompetencias, principalesCapacitaciones:principalesCapacitaciones, experienciaLaboral:experienciaLaboral, recomendado:recomendado}, id], (error, results)=>{
+                        if(error){
+                            console.log(error);
+                        }else{
+                            res.redirect('/indexCan');          
+                        }
+                    });
+                };
