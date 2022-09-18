@@ -53,6 +53,32 @@ exports.update = (req, res)=>{
         });
         };
 
+        exports.saveDep = (req, res)=>{
+            const nombre = req.body.nombre;
+            const estado = req.body.estado;
+            conexion.query('INSERT INTO departamento SET ?',{nombre:nombre, estado:estado}, (error, results)=>{
+            if(error){
+                console.log(error);
+            }else{
+                //console.log(results);   
+                res.redirect('/indexDep');     
+            }
+        });
+        };
+        
+        exports.updateDep = (req, res)=>{ 
+            const id = req.body.id;
+            const nombre = req.body.nombre;
+            const estado = req.body.estado;
+            conexion.query('UPDATE departamento SET ? WHERE id = ?', [{nombre:nombre, estado:estado}, id], (error, results)=>{
+                if(error){
+                    console.log(error);
+                }else{
+                    res.redirect('/indexDep');          
+                }
+            });
+            };
+
         exports.saveCapa = (req, res)=>{
             const descripcion = req.body.descripcion;
             const nivel = req.body.nivel;

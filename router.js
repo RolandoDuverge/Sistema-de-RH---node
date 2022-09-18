@@ -45,6 +45,48 @@ router.get('/delete/:id', (req,res)=>{
   }
 })
 
+
+//crear registros departamento
+router.get('/createDep', (req,res)=>{
+  if (req.session.loggedin) {
+res.render('createDep');		
+} else {
+res.render('login.ejs');   
+}
+}); 
+
+//editar registros departamento
+router.get('/editDep/:id', (req,res)=>{
+if (req.session.loggedin) {
+const id = req.params.id;
+conexion.query('SELECT * FROM departamento WHERE id=?', [id], (error, results)=>{
+if (error) {
+  throw error;
+} else {
+  res.render('editDep', {departamento:results[0]});   
+}
+})
+} else {
+  res.redirect('/login'); 
+}
+})
+
+//eliminar registros departamento
+router.get('/deleteDep/:id', (req,res)=>{ 
+if (req.session.loggedin) {
+const id = req.params.id;
+conexion.query('DELETE FROM departamento WHERE id= ?',[id], (error, results)=>{
+if (error) {
+  throw error;
+} else {
+  res.redirect('/indexDep');
+}
+})
+} else {
+  res.redirect('/login');
+}
+})
+
 router.get('/login', (req, res)=>{
   res.render('login');
 })
@@ -239,6 +281,9 @@ router.post('/updatePuesto', crud.updatePuesto)
 router.post('/saveExpe', crud.saveExpe)
 router.post('/updateExpe', crud.updateExpe)
 
+router.post('/saveDep', crud.saveDep)
+router.post('/updateDep', crud.updateDep)
+
 router.post('/register', async (req, res)=>{
   const user = req.body.user;
   const name = req.body.name;
@@ -416,5 +461,25 @@ router.get('/', (req, res)=> {
         }
         })
         });
+
+        router.get('/indexDep', (req, res)=> {
+          conexion.query('SELECT * FROM departamento',(error, results)=>{
+            if(error) {
+              throw error;
+            } else {
+            if (req.session.loggedin) {
+              res.render('indexDep',{
+                login: true,
+                name: req.session.name,
+                results:results
+              });		
+            } else {
+            res.render('indexDep.ejs', {results:results,login:false,
+              name:'Debe iniciar sesión',	});   	
+            }
+            res.end();
+          }
+          })
+          });
 
 module.exports = router;
