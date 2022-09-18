@@ -73,35 +73,43 @@
       </div>
     </nav>
     <br>
-    <h1 class="container">Competencias</h1>
+    <h1 class="container">Empleados</h1>
     <div class="container">
-      <a href="/createCompe" class="btn btn-outline-primary mt-4"
+      <a href="/createEmp" class="btn btn-outline-primary mt-4"
         ><i class="bx bx-plus"></i
       ></a>
-      <table id="competencias" class="table table-bordered table-striped text-center mt-4">
+      <table id="empleados" class="table table-bordered table-striped text-center mt-4">
         <thead>
           <tr class="bg-primary text-white">
-            <th scope="col">Descripcion</th>
+            <th scope="col">Cedula</th>
+            <th scope="col">Nombre</th>
+            <th scope="col">Fecha ingreso</th>
+            <th scope="col">Departamento</th>
+            <th scope="col">Puesto</th>
+            <th scope="col">Salario Mensual</th>
             <th scope="col">Estado</th>
             <th scope="col">Acción</th>
           </tr>
         </thead>
         <tbody>
-            <% results.forEach((competencias)=> { %> 
+            <% results.forEach((empleados)=> { %> 
           <tr>
-            <td><%= competencias.descripcion %></td>
+            <td><%= empleados.cedula %></td>
+            <td><%= empleados.nombre %></td>
+            <td><%= empleados.fechaIngreso %></td>
+            <td><%= empleados.departamento %></td>
+            <td><%= empleados.puesto %></td>
+            <td><%= empleados.salarioMensual %></td>
             <td>
-              <% if (competencias.estado=="1") { %>
+              <% if (empleados.estado=="1") { %>
                 <i class='bx bx-checkbox-square' ></i>
               <% }else {%>
                 <i class='bx bx-checkbox'></i>
                 <% } %>
             </td>
-
             <td>
-                <a href="/editCompe/<%= competencias.id %>" class="btn btn-outline-info mn"> <i class="fa-regular fa-sm fa-pen-to-square"></i> </a>
-              
-                 <a onclick="confirmar(<%= competencias.id %>)" class="btn btn-outline-danger"> <i class="fa-regular fa-trash-can"></i> </a>
+                <a href="/editEmp/<%= empleados.id %>" class="btn btn-outline-info mn"> <i class="fa-regular fa-sm fa-pen-to-square"></i> </a>
+                 <a onclick="confirmar(<%= empleados.id %>)" class="btn btn-outline-danger"> <i class="fa-regular fa-trash-can"></i> </a>
             </td>
           </tr>
           <% }) %>
@@ -145,7 +153,7 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.32/dist/sweetalert2.all.min.js"></script>
     <script>
       $(document).ready(function () {
-    $('#competencias').DataTable({
+    $('#empleados').DataTable({
       dom: "Bfrtip",
         buttons:{
             dom: {
@@ -182,7 +190,7 @@
         cancelButtonText: 'Cancelar',
       }).then((result) => {
         if (result.isConfirmed) {
-          window.location = '/deleteCompe/'+id;
+          window.location = '/deleteEmp/'+id;
         }
       })
       }

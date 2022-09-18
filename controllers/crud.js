@@ -197,3 +197,41 @@ exports.update = (req, res)=>{
                     });
                 }
                 };
+
+
+                exports.saveEmp = (req, res)=>{
+                    const cedula = req.body.cedula;
+                    const nombre = req.body.nombre;
+                    const fechaIngreso = req.body.fechaIngreso;
+                    const departamento = req.body.departamento;
+                    const puesto = req.body.puesto;
+                    const salarioMensual = req.body.salarioMensual;
+                    const estado = req.body.estado;
+                        // validacion cedula
+                    conexion.query('INSERT INTO empleados SET ?',{cedula:cedula, nombre:nombre, fechaIngreso:fechaIngreso, departamento:departamento, puesto:puesto, salarioMensual:salarioMensual, estado:estado}, (error, results)=>{
+                        if(error){
+                            console.log(error);
+                        }else{  
+                            res.redirect('/indexEmp');     
+                        }
+                    });
+                };
+                
+                exports.updateEmp = (req, res)=>{ 
+                    const id = req.body.id;
+                    const cedula = req.body.cedula;
+                    const nombre = req.body.nombre;
+                    const fechaIngreso = req.body.fechaIngreso;
+                    const departamento = req.body.departamento;
+                    const puesto = req.body.puesto;
+                    const salarioMensual = req.body.salarioMensual;
+                    const estado = req.body.estado;
+                        // validacion cedula
+                    conexion.query('UPDATE empleados SET ? WHERE id = ?', [{cedula:cedula, nombre:nombre, fechaIngreso:fechaIngreso, departamento:departamento, puesto:puesto, salarioMensual:salarioMensual, estado:estado}, id], (error, results)=>{
+                        if(error){
+                            console.log(error);
+                        }else{
+                            res.redirect('/indexEmp');          
+                        }
+                    });
+                };

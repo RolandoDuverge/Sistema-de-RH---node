@@ -260,6 +260,48 @@ if (error) {
 }
 })
 
+
+//crear registros empleados
+router.get('/createEmp', (req,res)=>{
+  if (req.session.loggedin) {
+res.render('createEmp');		
+} else {
+res.render('login.ejs');   
+}
+}); 
+
+//editar registros empleados
+router.get('/editEmp/:id', (req,res)=>{
+if (req.session.loggedin) {
+const id = req.params.id;
+conexion.query('SELECT * FROM empleados WHERE id=?', [id], (error, results)=>{
+if (error) {
+  throw error;
+} else {
+  res.render('editEmp', {empleados:results[0]});   
+}
+})
+} else {
+  res.redirect('/login'); 
+}
+})
+
+//eliminar registros empleados
+router.get('/deleteEmp/:id', (req,res)=>{ 
+if (req.session.loggedin) {
+const id = req.params.id;
+conexion.query('DELETE FROM empleados WHERE id= ?',[id], (error, results)=>{
+if (error) {
+  throw error;
+} else {
+  res.redirect('/indexEmp');
+}
+})
+} else {
+  res.redirect('/login');
+}
+})
+
 router.get('/login', (req, res)=>{
   res.render('login');
 })
@@ -283,6 +325,10 @@ router.post('/updateExpe', crud.updateExpe)
 
 router.post('/saveDep', crud.saveDep)
 router.post('/updateDep', crud.updateDep)
+
+router.post('/saveEmp', crud.saveEmp)
+router.post('/updateEmp', crud.updateEmp)
+
 
 router.post('/register', async (req, res)=>{
   const user = req.body.user;
@@ -481,5 +527,26 @@ router.get('/', (req, res)=> {
           }
           })
           });
+
+        router.get('/indexEmp', (req, res)=> {
+          conexion.query('SELECT * FROM empleados',(error, results)=>{
+            if(error) {
+              throw error;
+            } else {
+            if (req.session.loggedin) {
+              res.render('indexEmp',{
+                login: true,
+                name: req.session.name,
+                results:results
+              });		
+            } else {
+            res.render('indexEmp.ejs', {results:results,login:false,
+              name:'Debe iniciar sesión',	});   	
+            }
+            res.end();
+          }
+          })
+          });
+
 
 module.exports = router;
