@@ -1,5 +1,6 @@
 const conexion = require('../database/db');
-
+const alert = require("alert");
+const { parse } = require('dotenv');
 exports.save = (req, res)=>{
     const nombre = req.body.nombre;
     const estado = req.body.estado;
@@ -58,14 +59,17 @@ exports.update = (req, res)=>{
             const fechaPre = req.body.fechaPre;
             const fechaPos = req.body.fechaPos;
             const institucion = req.body.institucion;
+            if(Date.parse(fechaPos) < Date.parse(fechaPre)) {      
+                alert('La fecha final debe ser mayor a la fecha inicial') 
+             } else {
             conexion.query('INSERT INTO capacitaciones SET ?',{descripcion:descripcion, nivel:nivel, fechaPre:fechaPre, fechaPos:fechaPos, institucion:institucion}, (error, results)=>{
-            if(error){
-                console.log(error);
-            }else{
-                //console.log(results);   
-                res.redirect('/indexCapa');     
-            }
-        });
+                if(error){
+                    console.log(error);
+                }else{  
+                    res.redirect('/indexCapa');     
+                }
+            });
+        }
         };
         
         exports.updateCapa = (req, res)=>{ 
@@ -75,6 +79,9 @@ exports.update = (req, res)=>{
             const fechaPre = req.body.fechaPre;
             const fechaPos = req.body.fechaPos;
             const institucion = req.body.institucion;
+            if(Date.parse(fechaPos) < Date.parse(fechaPre)) {      
+                alert('La fecha final debe ser mayor a la fecha inicial') 
+             } else {
             conexion.query('UPDATE capacitaciones SET ? WHERE id = ?', [{descripcion:descripcion, nivel:nivel, fechaPre:fechaPre, fechaPos:fechaPos, institucion:institucion}, id], (error, results)=>{
                 if(error){
                     console.log(error);
@@ -82,6 +89,7 @@ exports.update = (req, res)=>{
                     res.redirect('/indexCapa');          
                 }
             });
+        }
         };
     
             exports.savePuesto = (req, res)=>{
@@ -90,6 +98,9 @@ exports.update = (req, res)=>{
                 const nivelSalarioMinimo = req.body.nivelSalarioMinimo;
                 const nivelSalarioMaximo = req.body.nivelSalarioMaximo;
                 const estado = req.body.estado;
+                if(parseInt(nivelSalarioMaximo) < parseInt(nivelSalarioMinimo)) {        
+                    alert('El salario maximo debe ser mayor al salario minimo') 
+                 } else {
                 conexion.query('INSERT INTO puestos SET ?',{nombre:nombre, nivelRiesgo:nivelRiesgo, nivelSalarioMinimo:nivelSalarioMinimo, nivelSalarioMaximo:nivelSalarioMaximo, estado:estado}, (error, results)=>{
                 if(error){
                     console.log(error);
@@ -98,6 +109,7 @@ exports.update = (req, res)=>{
                     res.redirect('/indexPuesto');     
                 }
             });
+            }
             };
             
             exports.updatePuesto = (req, res)=>{ 
@@ -107,6 +119,9 @@ exports.update = (req, res)=>{
                 const nivelSalarioMinimo = req.body.nivelSalarioMinimo;
                 const nivelSalarioMaximo = req.body.nivelSalarioMaximo;
                 const estado = req.body.estado;
+                if(parseInt(nivelSalarioMaximo) < parseInt(nivelSalarioMinimo)) {  
+                    alert('El salario maximo debe ser mayor al salario minimo') 
+                 } else {
                 conexion.query('UPDATE puestos SET ? WHERE id = ?', [{nombre:nombre, nivelRiesgo:nivelRiesgo, nivelSalarioMinimo:nivelSalarioMinimo, nivelSalarioMaximo:nivelSalarioMaximo, estado:estado}, id], (error, results)=>{
                     if(error){
                         console.log(error);
@@ -114,6 +129,7 @@ exports.update = (req, res)=>{
                         res.redirect('/indexPuesto');          
                     }
                 });
+            }
                 };
         
 
