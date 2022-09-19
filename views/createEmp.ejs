@@ -64,8 +64,8 @@
                 <form action="/saveEmp" method="POST">
                     <div class="mb-3">
                     <label for="empleados" class="form-label">Cedula</label>
-                    <input type="text" class="form-control" id="cedula" name="cedula" tabindex="1" required>
-                    </div>            
+                    <input type="text" class="form-control" maxlength="11" id="cedula" name="cedula" tabindex="1" required>
+                  </div>            
                         <div class="mb-3">
                           <label for="empleados" class="form-label">Nombre</label>
                           <input type="text" class="form-control" id="nombre" name="nombre" tabindex="2" required>
@@ -93,7 +93,7 @@
                                         <option value="1">Activo</option>                    
                                     </select>
                                     </div>    
-                    <button type="submit" class="btn btn-primary" tabindex="8">Guardar</button>
+                    <button type="submit" onclick="valida()" class="btn btn-primary" tabindex="8">Guardar</button>
                     <a href="/indexEmp" class="btn btn-secondary">Cancelar</a>
                 </form>
             </div>
@@ -105,5 +105,6 @@
       integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
       crossorigin="anonymous"
     ></script>
+    
   </body>
 </html>
