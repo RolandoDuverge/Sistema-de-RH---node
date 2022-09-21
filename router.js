@@ -306,7 +306,7 @@ if (error) {
 //crear registros empleados
 router.get('/createEmp', (req,res)=>{
   if (req.session.loggedin) {
-  conexion.query('SELECT nombre FROM departamento', (error, results)=>{
+  conexion.query('SELECT id,nombre FROM departamento', (error, results)=>{
     // console.log(results);
     if (error) {
       throw error;
