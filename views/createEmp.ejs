@@ -59,7 +59,7 @@
 
     <div class="container mt-4">     
         <div class="card border-secondary">  
-            <div class="card-header"><b>Nueva empledos</b></div>
+            <div class="card-header"><b>Nuevo empleado </b></div>
             <div class="card-body">
                 <form action="/saveEmp" method="POST">
                     <div class="mb-3">
@@ -74,10 +74,21 @@
                             <label for="empleados" class="form-label">Fecha ingreso</label>
                             <input type="date" class="form-control" id="fechaIngreso" name="fechaIngreso" tabindex="3" required>
                             </div>   
-                            <div class="mb-3">
-                              <label for="empleados" class="form-label">Departamento</label>
-                              <input type="text" class="form-control" id="departamento" name="departamento" tabindex="4" required>
-                              </div>     
+
+
+                            
+
+                              <div class="mb-3">
+                                <label for="empleados" class="form-label">Departamento</label>
+                                <select id="departamento" name="departamento" class="form-select" value="<%= results %>" aria-label="Default select example" tabindex="7">
+                                    <% for(var i = 0; i <= results.length-1; i++) { %>
+                                      <option value="<%= results.id %>"><%= results[i].nombre  %></option>
+                                    <% } %>
+                                  </select>                   
+                                </div> 
+
+
+
                               <div class="mb-3">
                                 <label for="empleados" class="form-label">Puesto</label>
                                 <input type="text" class="form-control" id="puesto" name="puesto" tabindex="5" required>
