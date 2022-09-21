@@ -80,19 +80,21 @@
 
                               <div class="mb-3">
                                 <label for="empleados" class="form-label">Departamento</label>
-                                <select id="departamento" name="departamento" class="form-select" value="<%= results %>" aria-label="Default select example" tabindex="7">
+                                <select id="departamento" name="departamento" class="form-select" value="<%= results %>" aria-label="Default select example" tabindex="4">
                                     <% for(var i = 0; i <= results.length-1; i++) { %>
                                       <option value="<%= results[i].id  %>"><%= results[i].nombre  %></option>
                                     <% } %>
                                   </select>                   
                                 </div> 
-
-
-
-                              <div class="mb-3">
-                                <label for="empleados" class="form-label">Puesto</label>
-                                <input type="text" class="form-control" id="puesto" name="puesto" tabindex="5" required>
-                                </div>  
+                                <div class="mb-3">
+                                  <label for="empleados" class="form-label">Puesto</label>
+                                  <select id="puesto" name="puesto" class="form-select" value="<%= puestoresults %>" aria-label="Default select example" tabindex="5">
+                                      <% for(var i = 0; i <= puestoresults.length-1; i++) { %>
+                                        <option value="<%= puestoresults[i].id  %>"><%= puestoresults[i].nombre  %></option>
+                                      <% } %>
+                                    </select>                   
+                                  </div> 
+ 
                                 <div class="mb-3">
                                   <label for="empleados" class="form-label">Salario mensual</label>
                                   <input type="number" min="1" max="32328329683629" class="form-control" id="salarioMensual" name="salarioMensual" tabindex="6" required>
