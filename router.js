@@ -1,4 +1,5 @@
 const express = require("express");
+const alert = require("alert");
 const router = express.Router();
 const conexion = require("./database/db");
 const bcryptjs = require('bcryptjs');
@@ -681,4 +682,23 @@ router.get('/', (req, res)=> {
   })
             });
 
+            router.get('/pushCan', (req, res)=> {
+              const id = req.body.id;
+              conexion.query('SELECT id,cedula,nombre,departamento,puestoAspira,salarioAspira FROM candidato',(error, results)=>{
+                  datos = results;
+                  datosid = datos[1].id;
+                  console.log(datos);
+                  datofecha = '15-12-2002';
+                  datoestado = '1';
+                  conexion.query('INSERT INTO empleados SET ?',{cedula:datos[datosid - 1].cedula, fechaIngreso:datofecha, nombre:datos[datosid - 1].nombre, departamento:datos[datosid - 1].departamento, puesto:datos[datosid - 1].puestoAspira, salarioMensual:datos[datosid - 1].salarioAspira, estado:datoestado }, (error, resultsemp)=>{
+                if(error) {
+                  throw error;
+                } else {
+                  alert('Promocion realizada con exito!') 
+                }
+              })
+            })
+            
+            });
+            
 module.exports = router;
