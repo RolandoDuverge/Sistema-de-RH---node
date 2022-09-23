@@ -139,10 +139,10 @@ router.get('/deleteCompe/:id', (req,res)=>{
 //crear registros candidatos
 router.get('/createCan', (req,res)=>{
 if (req.session.loggedin) {
-  conexion.query('SELECT id,nombre FROM departamento', (error, results)=>{
+  conexion.query('SELECT id,nombre FROM departamento WHERE estado = "1"', (error, results)=>{
     conexion.query('SELECT id,descripcion FROM capacitaciones', (error, resultsCapa)=>{
-    conexion.query('SELECT id,nombre FROM puestos', (error, puestoresults)=>{
-      conexion.query('SELECT id,descripcion FROM competencias', (error, resultsCompe)=>{
+    conexion.query('SELECT id,nombre FROM puestos WHERE estado = "1"', (error, puestoresults)=>{
+      conexion.query('SELECT id,descripcion FROM competencias WHERE estado = "1"', (error, resultsCompe)=>{
         conexion.query('SELECT * FROM experiencia', (error, resultsExpe)=>{
     // console.log(results);
     if (error) {
@@ -172,10 +172,10 @@ if (req.session.loggedin) {
 const id = req.params.id;
 conexion.query('SELECT * FROM candidato WHERE id=?', [id], (error, results)=>{
   conexion.query('SELECT * FROM candidato',(error, results)=>{
-    conexion.query('SELECT id,nombre FROM departamento',(error, resultsdep)=>{
-      conexion.query('SELECT id,nombre FROM puestos',(error, resultspues)=>{
+    conexion.query('SELECT id,nombre FROM departamento WHERE estado = "1"',(error, resultsdep)=>{
+      conexion.query('SELECT id,nombre FROM puestos WHERE estado = "1"',(error, resultspues)=>{
         conexion.query('SELECT id,descripcion FROM capacitaciones',(error, resultscap)=>{
-          conexion.query('SELECT id,descripcion FROM competencias',(error, resultscom)=>{
+          conexion.query('SELECT id,descripcion FROM competencias WHERE estado = "1"',(error, resultscom)=>{
             conexion.query('SELECT id,empresa FROM experiencia',(error, resultsexp)=>{
       datos = resultsdep;
       datospu = resultspues;
@@ -344,8 +344,8 @@ if (error) {
 //crear registros empleados
 router.get('/createEmp', (req,res)=>{
   if (req.session.loggedin) {
-  conexion.query('SELECT id,nombre FROM departamento', (error, results)=>{
-    conexion.query('SELECT id,nombre FROM puestos', (error, puestoresults)=>{
+  conexion.query('SELECT id,nombre FROM departamento WHERE estado = "1"', (error, results)=>{
+    conexion.query('SELECT id,nombre FROM puestos WHERE estado = "1"', (error, puestoresults)=>{
     // console.log(results);
     if (error) {
       throw error;
