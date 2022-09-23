@@ -75,28 +75,48 @@
                       </div>  
                       <div class="mb-3">
                         <label for="candidato" class="form-label">Puesto al que aspira</label>
-                        <input type="text" class="form-control" id="puestoAspira" name="puestoAspira" value="<%= candidato.puestoAspira %>" tabindex="3">
-                        </div>  
-                        <div class="mb-3">
-                          <label for="candidato" class="form-label">Departamento</label>
-                          <input type="text" class="form-control" id="departamento" name="departamento" value="<%= candidato.departamento  %>" tabindex="4">
-                          </div>  
+                        <select id="puestoAspira" name="puestoAspira" class="form-select" value="<%= datospu %>" aria-label="Default select example" tabindex="3">
+                            <% for(var i = 0; i <= datospu.length-1; i++) { %>
+                              <option value="<%= datospu[i].id  %>"><%= datospu[i].nombre  %></option>
+                            <% } %>
+                          </select>                   
+                        </div> 
+                      <div class="mb-3">
+                        <label for="candidato" class="form-label">Departamento</label>
+                        <select id="departamento" name="departamento" class="form-select" value="<%= datos %>" aria-label="Default select example" tabindex="4">
+                            <% for(var i = 0; i <= datos.length-1; i++) { %>
+                              <option value="<%= datos[i].id  %>"><%= datos[i].nombre  %></option>
+                            <% } %>
+                          </select>                   
+                        </div> 
                           <div class="mb-3">
                             <label for="candidato" class="form-label">Salario al que aspira</label>
                             <input type="number" min="1" max="32932632873" class="form-control" id="salarioAspira" name="salarioAspira" value="<%= candidato.salarioAspira %>" tabindex="5">
                             </div>   
                             <div class="mb-3">
                               <label for="candidato" class="form-label">Principales competencias</label>
-                              <input type="text" class="form-control" id="principalesCompetencias" name="principalesCompetencias" value="<%= candidato.principalesCompetencias %>" tabindex="6">
-                              </div>     
+                              <select id="principalesCompetencias" name="principalesCompetencias" class="form-select" value="<%= datoscom %>" aria-label="Default select example" tabindex="6">
+                                  <% for(var i = 0; i <= datoscom.length-1; i++) { %>
+                                    <option value="<%= datoscom[i].id  %>"><%= datoscom[i].descripcion  %></option>
+                                  <% } %>
+                                </select>                   
+                              </div>  
                               <div class="mb-3">
                                 <label for="candidato" class="form-label">Principales capacitaciones</label>
-                                <input type="text" class="form-control" id="principalesCapacitaciones" name="principalesCapacitaciones" value="<%= candidato.principalesCapacitaciones %>" tabindex="7">
-                                </div>     
+                                <select id="principalesCapacitaciones" name="principalesCapacitaciones" class="form-select" value="<%= datoscap %>" aria-label="Default select example" tabindex="7">
+                                    <% for(var i = 0; i <= datoscap.length-1; i++) { %>
+                                      <option value="<%= datoscap[i].id  %>"><%= datoscap[i].descripcion  %></option>
+                                    <% } %>
+                                  </select>                   
+                                </div> 
                                 <div class="mb-3">
                                   <label for="candidato" class="form-label">Experiencia laboral</label>
-                                  <input type="text" class="form-control" id="experienciaLaboral" name="experienciaLaboral" value="<%= candidato.experienciaLaboral %>" tabindex="8">
-                                  </div>     
+                                  <select id="experienciaLaboral" name="experienciaLaboral" class="form-select" value="<%= datosexp %>" aria-label="Default select example" tabindex="8">
+                                      <% for(var i = 0; i <= datosexp.length-1; i++) { %>
+                                        <option value="<%= datosexp[i].id  %>"><%= datosexp[i].empresa %></option>
+                                      <% } %>
+                                    </select>                   
+                                  </div>      
                                   <div class="mb-3">
                                     <label for="candidato" class="form-label">Recomendado por</label>
                                     <input type="text" class="form-control" id="recomendado" name="recomendado" value="<%= candidato.recomendado %>" tabindex="9 ">

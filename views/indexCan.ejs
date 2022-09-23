@@ -98,12 +98,12 @@
           <tr>
             <td><%= candidato.cedula %></td>
             <td><%= candidato.nombre %></td>
-            <td><%= candidato.puestoAspira %></td>
-            <td><%= candidato.departamento %></td>
+            <td><%= datospu[candidato.puestoAspira - 1].nombre %></td>
+            <td><%= datos[candidato.departamento - 1].nombre %></td>
             <td><%= candidato.salarioAspira %></td>
-            <td><%= candidato.principalesCompetencias %></td>
-            <td><%= candidato.principalesCapacitaciones %></td>
-            <td><%= candidato.experienciaLaboral %></td>
+            <td><%= datoscom[candidato.principalesCompetencias - 1].descripcion %></td>
+            <td><%= datoscap[candidato.principalesCapacitaciones - 1].descripcion %></td>
+            <td><%= datosexp[candidato.experienciaLaboral - 1].empresa %></td>
             <td><%= candidato.recomendado %></td>
 
             <td>

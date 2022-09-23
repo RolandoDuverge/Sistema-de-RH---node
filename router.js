@@ -171,11 +171,28 @@ router.get('/editCan/:id', (req,res)=>{
 if (req.session.loggedin) {
 const id = req.params.id;
 conexion.query('SELECT * FROM candidato WHERE id=?', [id], (error, results)=>{
+  conexion.query('SELECT * FROM candidato',(error, results)=>{
+    conexion.query('SELECT id,nombre FROM departamento',(error, resultsdep)=>{
+      conexion.query('SELECT id,nombre FROM puestos',(error, resultspues)=>{
+        conexion.query('SELECT id,descripcion FROM capacitaciones',(error, resultscap)=>{
+          conexion.query('SELECT id,descripcion FROM competencias',(error, resultscom)=>{
+            conexion.query('SELECT id,empresa FROM experiencia',(error, resultsexp)=>{
+      datos = resultsdep;
+      datospu = resultspues;
+      datoscom = resultscom;
+      datoscap = resultscap;
+      datosexp = resultsexp;
 if (error) {
   throw error;
 } else {
   res.render('editCan', {candidato:results[0]});   
 }
+})
+})
+})
+})
+})
+})
 })
 } else {
   res.redirect('/login'); 
@@ -631,6 +648,16 @@ router.get('/', (req, res)=> {
 
           router.get('/indexCan', (req, res)=> {
             conexion.query('SELECT * FROM candidato',(error, results)=>{
+              conexion.query('SELECT id,nombre FROM departamento',(error, resultsdep)=>{
+                conexion.query('SELECT id,nombre FROM puestos',(error, resultspues)=>{
+                  conexion.query('SELECT id,descripcion FROM capacitaciones',(error, resultscap)=>{
+                    conexion.query('SELECT id,descripcion FROM competencias',(error, resultscom)=>{
+                      conexion.query('SELECT id,empresa FROM experiencia',(error, resultsexp)=>{
+                datos = resultsdep;
+                datospu = resultspues;
+                datoscom = resultscom;
+                datoscap = resultscap;
+                datosexp = resultsexp;
               if(error) {
                 throw error;
               } else {
@@ -638,7 +665,7 @@ router.get('/', (req, res)=> {
                 res.render('indexCan',{
                   login: true,
                   name: req.session.name,
-                  results:results
+                  results:results,
                 });		
               } else {
               res.render('indexCan.ejs', {results:results,login:false,
@@ -647,6 +674,11 @@ router.get('/', (req, res)=> {
               res.end();
             }
             })
+          })
+        })
+      })
+    })
+  })
             });
 
 module.exports = router;
