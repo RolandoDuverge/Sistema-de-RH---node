@@ -97,9 +97,10 @@
             <td><%= empleados.cedula %></td>
             <td><%= empleados.nombre %></td>
             <td><%= empleados.fechaIngreso %></td>
-            <td><%= empleados.departamento %></td>
-            <td><%= empleados.puesto %></td>
-            <td><%= empleados.salarioMensual %></td>
+            <td><%= datos[empleados.departamento].nombre %></td>
+            <td><%= datospu[empleados.puesto].nombre %></td>
+            <td><%= empleados.salarioMensual  %></td>
+
             <td>
               <% if (empleados.estado=="1") { %>
                 <i class='bx bx-checkbox-square' ></i>

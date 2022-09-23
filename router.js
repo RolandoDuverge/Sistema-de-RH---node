@@ -625,8 +625,13 @@ router.get('/', (req, res)=> {
           });
 
         router.get('/indexEmp', (req, res)=> {
-          conexion.query('SELECT id,nombre FROM departamento', (error, resultsdep)=>{
+          conexion.query('SELECT id,nombre FROM departamento',(error, resultsdep)=>{
+            conexion.query('SELECT id,nombre FROM puestos',(error, resultspues)=>{
+              conexion.query('SELECT * FROM candidatos',(error, resultsCan)=>{
           conexion.query('SELECT * FROM empleados',(error, results)=>{
+            datos = resultsdep;
+                datospu = resultspues;
+                datoscan = resultsCan;
             if(error) {
               throw error;
             } else {
@@ -645,6 +650,8 @@ router.get('/', (req, res)=> {
           }
           })
         })
+      })
+    })
           });
 
           router.get('/indexCan', (req, res)=> {
@@ -683,20 +690,26 @@ router.get('/', (req, res)=> {
             });
 
             router.get('/pushCan', (req, res)=> {
-              const id = req.body.id;
               conexion.query('SELECT id,cedula,nombre,departamento,puestoAspira,salarioAspira FROM candidato',(error, results)=>{
                   datos = results;
-                  datosid = datos[1].id;
-                  console.log(datos);
+                  datosid = datos[0].id;
                   datofecha = '15-12-2002';
+                  const date = new Date();
+                  const [month, day, year] = [date.getMonth(), date.getDate(), date.getFullYear()];  
+                  datofecha = month + "-" + day + "-" + year ;
+                  console.log(datofecha);
                   datoestado = '1';
                   conexion.query('INSERT INTO empleados SET ?',{cedula:datos[datosid - 1].cedula, fechaIngreso:datofecha, nombre:datos[datosid - 1].nombre, departamento:datos[datosid - 1].departamento, puesto:datos[datosid - 1].puestoAspira, salarioMensual:datos[datosid - 1].salarioAspira, estado:datoestado }, (error, resultsemp)=>{
+                    const id = datosid;
+                    conexion.query('DELETE FROM candidato WHERE id= ?',[id], (error, results)=>{
                 if(error) {
                   throw error;
                 } else {
+                  res.redirect('/indexCan');
                   alert('Promocion realizada con exito!') 
                 }
               })
+            })
             })
             
             });
