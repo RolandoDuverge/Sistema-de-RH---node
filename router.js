@@ -693,11 +693,9 @@ router.get('/', (req, res)=> {
               conexion.query('SELECT id,cedula,nombre,departamento,puestoAspira,salarioAspira FROM candidato',(error, results)=>{
                   datos = results;
                   datosid = datos[0].id;
-                  datofecha = '15-12-2002';
                   const date = new Date();
                   const [month, day, year] = [date.getMonth(), date.getDate(), date.getFullYear()];  
-                  datofecha = month + "-" + day + "-" + year ;
-                  console.log(datofecha);
+                  datofecha = day + "-" + month + "-" + year;
                   datoestado = '1';
                   conexion.query('INSERT INTO empleados SET ?',{cedula:datos[datosid - 1].cedula, fechaIngreso:datofecha, nombre:datos[datosid - 1].nombre, departamento:datos[datosid - 1].departamento, puesto:datos[datosid - 1].puestoAspira, salarioMensual:datos[datosid - 1].salarioAspira, estado:datoestado }, (error, resultsemp)=>{
                     const id = datosid;

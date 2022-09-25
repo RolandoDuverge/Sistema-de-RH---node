@@ -110,7 +110,7 @@
             <td>
                 <a href="/editCan/<%= candidato.id %>" class="btn btn-outline-info mn"> <i class="fa-regular fa-sm fa-pen-to-square"></i> </a>
                  <a onclick="confirmar(<%= candidato.id %>)" class="btn btn-outline-danger"> <i class="fa-regular fa-trash-can"></i> </a>
-                 <a href="/pushCan" class="btn btn-success" tabindex="1"> <i class='bx bxs-plus-circle'></i></a>
+                 <a onclick="confirmarPro(<%= candidato.id %>)" class="btn btn-success" tabindex="1"> <i class='bx bxs-plus-circle'></i></a>
     
             </td>
           </tr>
@@ -193,6 +193,21 @@
       }).then((result) => {
         if (result.isConfirmed) {
           window.location = '/deleteCan/'+id;
+        }
+      })
+      }
+
+      function confirmarPro(id){
+              Swal.fire({
+        title: '¿Confirma ascender candidato?',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Confirmar',
+        cancelButtonText: 'Cancelar',
+      }).then((result) => {
+        if (result.isConfirmed) {
+          window.location = '/pushCan';
         }
       })
       }
