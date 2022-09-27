@@ -88,16 +88,14 @@
           <% }) %>
         </tbody>
       </table>
+      <% if (login) { %>                
+        <h6>Usuario conectado: <strong><%= name %></strong></h6>                        
+        <a href="logout" class="a-logout">Logout</a>
+    <%} else { %>
+        <h6><strong><%= name %></strong></h6>   
+        <a href="login" class="a-login">Ir a Login</a>
+    <% } %>    
     </div>    
-
-    <% if (login) { %>                
-      <h6>Usuario conectado: <strong><%= name %></strong></h6>                        
-      <a href="logout" class="a-logout">Logout</a>
-  <%} else { %>
-      <h6><strong><%= name %></strong></h6>   
-      <a href="login" class="a-login">Ir a Login</a>
-  <% } %>                
-
 
         <!-- datatables -->
         <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
