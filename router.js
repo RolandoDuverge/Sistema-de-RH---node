@@ -444,7 +444,7 @@ router.post('/register', async (req, res)=>{
 				alertIcon:'success',
 				showConfirmButton: false,
 				timer: 1500,
-				ruta: ''
+				ruta: 'login'
 			});
     }
   })
