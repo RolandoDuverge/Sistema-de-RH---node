@@ -538,30 +538,36 @@ router.get('/', (req, res)=> {
   });
   
 router.get('/indexCanUsers', (req, res)=> {
+  conexion.query('SELECT nombre,nivelRiesgo,nivelSalarioMinimo,nivelSalarioMaximo FROM puestos WHERE estado = "1"', (error, puestoresults)=>{
 	  if (req.session.loggedin) {
 		  res.render('indexCanUsers',{
 			  login: true,
 			  name: req.session.name,
+        puestoresults:puestoresults
 		  });		
 	  } else {
 		res.render('indexCanUsers.ejs', {login:false,
 			name:'Debe iniciar sesión',	});   	
 	  }
 	  res.end();
+  })
 });
 
     
 router.get('/indexExpeUsers', (req, res)=> {
+  conexion.query('SELECT empresa,puesto,fechaPre,fechaPos,salario FROM experiencia', (error, results)=>{
 	  if (req.session.loggedin) {
 		  res.render('indexExpeUsers',{
 			  login: true,
 			  name: req.session.name,
+        results:results
 		  });		
 	  } else {
 		res.render('indexExpeUsers.ejs', {login:false,
 			name:'Debe iniciar sesión',	});   	
 	  }
 	  res.end();
+  })
   });
 
   router.get('/indexCompe', (req, res)=> {

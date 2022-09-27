@@ -62,12 +62,43 @@
         ><i class="bx bx-plus"></i
       ></a>
     </div>      
-    </center>                   
+  </center>   
+  <h3 class="container">Puestos</h3>       
+  <div class="container">
+    <table id="puestos" class="table table-bordered table-striped text-center mt-4">
+      <thead>
+        <tr class="bg-primary text-white">
+          <th scope="col">Nombre</th>
+          <th scope="col">Nivel de Riesgo</th>
+          <th scope="col">Salario Minimo</th>
+          <th scope="col">Salario Maximo</th>
+        </tr>
+      </thead>
+      <tbody>
+          <% puestoresults.forEach((puestos)=> { %> 
+        <tr>
+          <td><%= puestos.nombre %></td>
+          <td>
+            <% if (puestos.nivelRiesgo=="1") { %>
+              <p>Medio</p>
+            <% }else if (puestos.nivelRiesgo=="2")  {%>
+              <p>Bajo</p>
+              <% }else {%>
+                <p>Alto</p>
+                <% } %>
+          </td>
+          <td><%= puestos.nivelSalarioMinimo %></td>
+          <td><%= puestos.nivelSalarioMaximo %></td>
+        </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  </div>             
     <% if (login) { %>                
-      <h3>Usuario conectado: <strong><%= name %></strong></h3>                        
+      <h6>Usuario conectado: <strong><%= name %></strong></h6>                        
       <a href="logout" class="a-logout">Logout</a>
   <%} else { %>
-      <h3><strong><%= name %></strong></h3>   
+      <h6><strong><%= name %></strong></h6>   
       <a href="login" class="a-login">Ir a Login</a>
   <% } %>
 

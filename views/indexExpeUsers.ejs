@@ -64,13 +64,39 @@
       </div> 
     </center>
 
-      <% if (login) { %>                
-        <h3>Usuario conectado: <strong><%= name %></strong></h3>                        
-        <a href="logout" class="a-logout">Logout</a>
-    <%} else { %>
-        <h3><strong><%= name %></strong></h3>   
-        <a href="login" class="a-login">Ir a Login</a>
-    <% } %>                   
+    <h3 class="container">Experiencia registrada</h3>
+    <div class="container">
+      <table id="experiencia" class="table table-bordered table-striped text-center mt-4">
+        <thead>
+          <tr class="bg-primary text-white">
+            <th scope="col">Empresa</th>
+            <th scope="col">Puesto ocupado</th>
+            <th scope="col">Fecha desde</th>
+            <th scope="col">Fecha hasta</th>
+            <th scope="col">Salario</th>
+          </tr>
+        </thead>
+        <tbody>
+            <% results.forEach((experiencia)=> { %> 
+          <tr>
+            <td><%= experiencia.empresa %></td>
+            <td><%= experiencia.puesto %></td>
+            <td><%= experiencia.fechaPre %></td>
+            <td><%= experiencia.fechaPos %></td>
+            <td><%= experiencia.salario %></td>
+          </tr>
+          <% }) %>
+        </tbody>
+      </table>
+    </div>    
+
+    <% if (login) { %>                
+      <h6>Usuario conectado: <strong><%= name %></strong></h6>                        
+      <a href="logout" class="a-logout">Logout</a>
+  <%} else { %>
+      <h6><strong><%= name %></strong></h6>   
+      <a href="login" class="a-login">Ir a Login</a>
+  <% } %>                
 
 
         <!-- datatables -->
