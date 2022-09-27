@@ -461,6 +461,14 @@ router.get("/editEmp/:id", (req, res) => {
       "SELECT * FROM empleados WHERE id=?",
       [id],
       (error, results) => {
+        conexion.query(
+          'SELECT id,nombre FROM departamento WHERE estado = "1"',
+          (error, resultsdep) => {
+            conexion.query(
+              'SELECT id,nombre FROM puestos WHERE estado = "1"',
+              (error, resultspues) => {
+                datos = resultsdep;
+                datospu = resultspues;
         if (error) {
           throw error;
         } else {
@@ -468,6 +476,8 @@ router.get("/editEmp/:id", (req, res) => {
         }
       }
     );
+  })
+})
   } else {
     res.redirect("/login");
   }
@@ -906,7 +916,7 @@ router.get("/pushCan/:id", (req, res) => {
         date.getDate(),
         date.getFullYear(),
       ];
-      datofecha = day + "-" + month + "-" + year;
+      datofecha = year + "-" + month + "-" + day;
       datoestado = "1";
       conexion.query(
         "INSERT INTO empleados SET ?",

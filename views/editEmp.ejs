@@ -79,12 +79,20 @@
                         </div>  
                         <div class="mb-3">
                           <label for="empleados" class="form-label">Departamento</label>
-                          <input type="text" class="form-control" id="departamento" name="departamento" value="<%= empleados.departamento  %>" tabindex="4">
-                          </div>  
+                          <select id="departamento" name="departamento" class="form-select" value="<%= datos %>" aria-label="Default select example" tabindex="4">
+                              <% for(var i = 0; i <= datos.length-1; i++) { %>
+                                <option value="<%= datos[i].id  %>"><%= datos[i].nombre  %></option>
+                              <% } %>
+                            </select>                   
+                          </div> 
                           <div class="mb-3">
-                            <label for="empleados" class="form-label">Puestos</label>
-                            <input type="text" class="form-control" id="puesto" name="puesto" value="<%= empleados.puesto  %>" tabindex="5">
-                            </div>   
+                            <label for="empleados" class="form-label">Puesto</label>
+                            <select id="puesto" name="puesto" class="form-select" value="<%= datospu %>" aria-label="Default select example" tabindex="5">
+                                <% for(var i = 0; i <= datospu.length-1; i++) { %>
+                                  <option value="<%= datospu[i].id  %>"><%= datospu[i].nombre  %></option>
+                                <% } %>
+                              </select>                   
+                            </div> 
                             <div class="mb-3">
                               <label for="empleados" class="form-label">Salario mensual</label>
                               <input type="text" class="form-control" id="salarioMensual" name="salarioMensual" value="<%= empleados.salarioMensual  %>" tabindex="6">
