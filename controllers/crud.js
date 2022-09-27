@@ -112,7 +112,13 @@ exports.update = (req, res)=>{
                 if(error){
                     console.log(error);
                 }else{
-                    res.redirect('/indexCapa');          
+                    res.redirect('/indexCapa', {
+                        position: 'top-end',
+                        icon: 'success',
+                        title: 'Your work has been saved',
+                        showConfirmButton: false,
+                        timer: 1500
+                      });
                 }
             });
         }
@@ -172,7 +178,7 @@ exports.update = (req, res)=>{
                         if(error){
                             console.log(error);
                         }else{  
-                            res.redirect('/indexExpe');     
+                            res.redirect('/indexExpeUsers');     
                         }
                     });
                 }
@@ -376,7 +382,7 @@ exports.update = (req, res)=>{
             if(error){
                 console.log(error);
             }else{  
-                res.redirect('/indexCan');    
+                res.redirect('/indexCanUsers');    
             }
         });
          } else {

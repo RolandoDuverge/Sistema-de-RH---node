@@ -382,7 +382,7 @@ if (error) {
 //eliminar registros empleados
 router.get('/deleteEmp/:id', (req,res)=>{ 
 if (req.session.loggedin) {
-const id = req.params.id;
+    const id = req.params.id;
 conexion.query('DELETE FROM empleados WHERE id= ?',[id], (error, results)=>{
 if (error) {
   throw error;
@@ -520,7 +520,33 @@ router.get('/', (req, res)=> {
   }
   })
   });
+  
+router.get('/indexCanUsers', (req, res)=> {
+	  if (req.session.loggedin) {
+		  res.render('indexCanUsers',{
+			  login: true,
+			  name: req.session.name,
+		  });		
+	  } else {
+		res.render('indexCanUsers.ejs', {login:false,
+			name:'Debe iniciar sesión',	});   	
+	  }
+	  res.end();
+});
 
+    
+router.get('/indexExpeUsers', (req, res)=> {
+	  if (req.session.loggedin) {
+		  res.render('indexExpeUsers',{
+			  login: true,
+			  name: req.session.name,
+		  });		
+	  } else {
+		res.render('indexExpeUsers.ejs', {login:false,
+			name:'Debe iniciar sesión',	});   	
+	  }
+	  res.end();
+  });
 
   router.get('/indexCompe', (req, res)=> {
 	conexion.query('SELECT * FROM competencias',(error, results)=>{
@@ -689,16 +715,18 @@ router.get('/', (req, res)=> {
   })
             });
 
-            router.get('/pushCan', (req, res)=> {
+            router.get('/pushCan/:id', (req, res)=> {
               conexion.query('SELECT id,cedula,nombre,departamento,puestoAspira,salarioAspira FROM candidato',(error, results)=>{
                   datos = results;
-                  datosid = datos[0].id;
+                  const id = req.params.id;
+                  numero = id - 1;
                   const date = new Date();
                   const [month, day, year] = [date.getMonth(), date.getDate(), date.getFullYear()];  
                   datofecha = day + "-" + month + "-" + year;
                   datoestado = '1';
-                  conexion.query('INSERT INTO empleados SET ?',{cedula:datos[datosid - 1].cedula, fechaIngreso:datofecha, nombre:datos[datosid - 1].nombre, departamento:datos[datosid - 1].departamento, puesto:datos[datosid - 1].puestoAspira, salarioMensual:datos[datosid - 1].salarioAspira, estado:datoestado }, (error, resultsemp)=>{
-                    const id = datosid;
+                  conexion.query('INSERT INTO empleados SET ?',{cedula:datos[numero].cedula, fechaIngreso:datofecha, 
+                    nombre:datos[numero].nombre, departamento:datos[numero].departamento, puesto:datos[numero].puestoAspira,
+                     salarioMensual:datos[numero].salarioAspira, estado:datoestado }, (error, resultsemp)=>{
                     conexion.query('DELETE FROM candidato WHERE id= ?',[id], (error, results)=>{
                 if(error) {
                   throw error;
