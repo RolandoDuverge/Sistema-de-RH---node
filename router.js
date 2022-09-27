@@ -470,6 +470,8 @@ router.post('/auth', async (req, res)=> {
 			} else {           
 				req.session.loggedin = true;                
 				req.session.name = results[0].name;
+        conexion.query("SELECT rol FROM users WHERE user=? ", [user], function (err, row) {
+          if (row[0].rol == 'admin') {
 				res.render('login', {
 					alert: true,
 					alertTitle: "Conexión exitosa",
@@ -478,11 +480,25 @@ router.post('/auth', async (req, res)=> {
 					showConfirmButton: false,
 					timer: 1500,
 					ruta: ''
-				});        			
-			}			
-			res.end();
-		});
-	} else {	
+				});			
+				}else{
+          {
+            res.render('login', {
+              alert: true,
+              alertTitle: "Conexión exitosa",
+              alertMessage: "¡LOGIN CORRECTO!",
+              alertIcon:'success',
+              showConfirmButton: false,
+              timer: 1500,
+              ruta: 'indexCanUsers'
+            });	
+        }
+			    res.end();
+        }
+        })
+		  }
+    })
+  } else {	
 		res.send('Please enter user and Password!');
 		res.end();
 	}
