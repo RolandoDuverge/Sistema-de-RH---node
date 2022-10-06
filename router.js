@@ -469,15 +469,17 @@ router.get("/editEmp/:id", (req, res) => {
               (error, resultspues) => {
                 datos = resultsdep;
                 datospu = resultspues;
-        if (error) {
-          throw error;
-        } else {
-          res.render("editEmp", { empleados: results[0] });
-        }
+                if (error) {
+                  throw error;
+                } else {
+                  res.render("editEmp", { empleados: results[0] });
+                }
+              }
+            );
+          }
+        );
       }
     );
-  })
-})
   } else {
     res.redirect("/login");
   }
